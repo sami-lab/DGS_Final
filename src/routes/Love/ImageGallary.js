@@ -102,6 +102,7 @@ function ImageGallary({ theme, navigation }) {
   const { state, dispatch } = useContext(GlobalContext);
   const [images, setImages] = useState([]);
   const [error, setError] = useState(false);
+  const [pageLoaded, setPageLoaded] = useState(false);
   const [scroll, setScroll] = useState(1);
   const [lastCall, setLastCall] = useState(1);
   const [totalRecords, setTotalRecords] = useState(1);
@@ -111,8 +112,11 @@ function ImageGallary({ theme, navigation }) {
   const onShare = (img, option) => {
     convertToBase64(apiUrl + '/files/' + img, option);
   };
+
+  //inital data load
   useEffect(() => {
     dispatch({ type: actionTypes.SET_LOADING, payload: true });
+    setPageLoaded(true);
     axios
       .get('/ImageGallery?page=' + scroll, {
         headers: {
@@ -185,7 +189,7 @@ function ImageGallary({ theme, navigation }) {
             setModelOpen(true);
           }}
         />
-      ) : !state.loading && error ? (
+      ) : (!state.loading && pageLoaded) || error ? (
         <View
           style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
         >

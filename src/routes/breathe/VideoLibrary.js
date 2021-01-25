@@ -86,6 +86,7 @@ function VideoLibrary({ theme, navigation }) {
   });
   const { state, dispatch } = useContext(GlobalContext);
   const [videos, setVideos] = useState([]);
+  const [pageLoaded, setPageLoaded] = useState(false);
   const [error, setError] = useState(false);
   const [search, setSearch] = useState(null);
   const [categories, setCategories] = useState([]);
@@ -173,8 +174,11 @@ function VideoLibrary({ theme, navigation }) {
         return;
       });
   };
+
+  //Initial Data render
   useEffect(() => {
     dispatch({ type: actionTypes.SET_LOADING, payload: true });
+    setPageLoaded(true);
     fetchCategories();
     fetchAll();
   }, []);
@@ -262,7 +266,7 @@ function VideoLibrary({ theme, navigation }) {
           <ModalSelector
             data={categories.map((item) => {
               const obj = {
-                label: item.name.charAt(0).toUpperCase() + item.name.slice(1),
+                label: item.name.toUpperCase(),
                 key: item._id,
               };
               return obj;
@@ -371,7 +375,7 @@ function VideoLibrary({ theme, navigation }) {
           }}
           onEndReachedThreshold={0.3}
         />
-      ) : !state.loading && error ? (
+      ) : (!state.loading && pageLoaded) || error ? (
         <View
           style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
         >

@@ -67,8 +67,8 @@ function ConnectCategories({ theme, navigation }) {
       backgroundColor: theme.colors.darkPink,
       borderRadius: Dimensions.get('screen').height * 0.04,
       justifyContent: 'center',
-      alignItems: 'center'
-    }
+      alignItems: 'center',
+    },
   });
   const { state, dispatch } = useContext(GlobalContext);
   const [categories, setCategories] = useState([]);
@@ -89,7 +89,7 @@ function ConnectCategories({ theme, navigation }) {
         dispatch({ type: actionTypes.SET_LOADING, payload: false });
         Alert.alert(
           'Fail To fetch data',
-          error.response ? error.response.data.message : error.message,
+          error.response ? error.response.data.message : error.message
         );
         return;
       });
@@ -118,14 +118,15 @@ function ConnectCategories({ theme, navigation }) {
           style={{
             justifyContent: 'space-around',
             height: Dimensions.get('screen').height * 0.6,
-          }}>
+          }}
+        >
           {categories.length > 0 && (
             <DropDownPicker
               items={categories.map((item) => {
                 const obj = {
-                  label: item.name,
+                  label: item.name.toUpperCase(),
                   value: item._id,
-                  icon: () => { },
+                  icon: () => {},
                 };
                 return obj;
               })}
@@ -170,7 +171,8 @@ function ConnectCategories({ theme, navigation }) {
                     width: '80%',
                     alignSelf: 'center',
                     borderBottomColor: theme.colors.grey,
-                  }}></View>
+                  }}
+                ></View>
               )}
               itemStyle={{
                 justifyContent: 'flex-start',
