@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "881565101160",
+    "project_id": "dgs-app-deaaa",
+    "storage_bucket": "dgs-app-deaaa.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:881565101160:android:648af9a181f03621591fdd",
+        "android_client_info": {
+          "package_name": "com.dgsapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "881565101160-b5u61ec0kiib1vcq3s3lmo0rhpsob8oq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD6S5HzhHyWhNjsvlSA3yGVGH0y6oyfqFU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "881565101160-b5u61ec0kiib1vcq3s3lmo0rhpsob8oq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

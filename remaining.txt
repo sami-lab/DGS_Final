@@ -1,0 +1,18 @@
+Update Splash screen library by ruunning 
+cd ios
+run pod install
+https://github.com/crazycodeboy/react-native-splash-screen
+
+
+
+
+
+
+manage Update images through out server current us replace policy upon update 
+change dropdown for city and country and other dropdown
+Pagination on scolling 
+push notification 
+connect with orignal server
+change alert styles
+ Tabs icon
+ dropdown of city
