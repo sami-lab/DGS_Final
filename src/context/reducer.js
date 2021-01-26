@@ -9,7 +9,6 @@ const reducer = (prevState, action) => {
         loading: false,
       };
     case actionTypes.SET_LOADING:
-      console.log('Loading', action.payload);
       return {
         ...prevState,
         loading: action.payload,
@@ -34,6 +33,33 @@ const reducer = (prevState, action) => {
         user: action.user,
         userToken: action.token,
         loading: false,
+      };
+    case actionTypes.SET_ARTICLE_CATEGORIES:
+      return {
+        ...prevState,
+        articleCategories: action.articleCategories,
+      };
+    case actionTypes.SET_ARTICLES:
+      return {
+        ...prevState,
+        articles: action.articles,
+        articlesTotalRecords: action.articlesTotalRecords,
+      };
+    case actionTypes.SET_VIDEOS_CATEGORIES:
+      return {
+        ...prevState,
+        videosCategories: action.videosCategories,
+      };
+    case actionTypes.SET_VIDEOS:
+      return {
+        ...prevState,
+        videos: action.videos,
+        videosTotalRecords: action.videosTotalRecords,
+      };
+    case actionTypes.SET_CONNECT_CATEGORIES:
+      return {
+        ...prevState,
+        connectCategories: action.connectCategories,
       };
     case actionTypes.TOGGLE_THEME:
       console.log('Theme', prevState.isDarkTheme);

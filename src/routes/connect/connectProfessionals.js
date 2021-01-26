@@ -101,7 +101,7 @@ function connectCategories({ theme, navigation, route }) {
                 key={pro._id}
                 style={styles.professionalsCard}
                 onPress={() =>
-                  navigation.navigate('ProfessionalDetails', { id: pro._id })
+                  navigation.navigate('ProfessionalDetails', { item: pro })
                 }
               >
                 <View style={{ flex: 1, alignSelf: 'center' }}>

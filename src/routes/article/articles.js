@@ -48,7 +48,7 @@ function Articles({ theme, navigation }) {
       zIndex: 10,
     },
     inputCard: {
-      marginVertical: 8,
+      marginVertical: 5,
       width: Dimensions.get('screen').width * 0.85,
       shadowColor: '#000',
       alignSelf: 'center',
@@ -93,7 +93,6 @@ function Articles({ theme, navigation }) {
       marginBottom: 5,
       fontWeight: 'bold',
       fontFamily: theme.fonts.bold.fontFamily,
-
       marginBottom: 5,
     },
     text: {
@@ -102,14 +101,14 @@ function Articles({ theme, navigation }) {
     },
   });
   const { state, dispatch } = useContext(GlobalContext);
-  const [articles, setArticles] = useState([]);
+  const [articles, setArticles] = useState(state.articles);
   const [error, setError] = useState(false);
   const [pageLoaded, setPageLoaded] = useState(false);
   const [search, setSearch] = useState(null);
-  const [categories, setCategories] = useState([]);
+  const [categories, setCategories] = useState(state.articleCategories);
   const [scroll, setScroll] = useState(1);
   const [lastCall, setLastCall] = useState(1);
-  const [totalRecords, setTotalRecords] = useState(1);
+  const [totalRecords, setTotalRecords] = useState(state.articlesTotalRecords);
   const [selectedCategory, setSelectedCategory] = useState('');
   const [selectedCategoryValue, setSelectedCategoryValue] = useState('');
 
@@ -122,6 +121,10 @@ function Articles({ theme, navigation }) {
       })
       .then(({ data: response }) => {
         setCategories([{ name: 'None', _id: '' }, ...response.data.doc]);
+        dispatch({
+          type: actionTypes.SET_ARTICLE_CATEGORIES,
+          articleCategories: [{ name: 'None', _id: '' }, ...response.data.doc],
+        });
         setError(false);
       })
       .catch((error) => {
@@ -146,6 +149,11 @@ function Articles({ theme, navigation }) {
         setLastCall(1);
         setTotalRecords(response.total);
         setArticles(response.data.doc);
+        dispatch({
+          type: actionTypes.SET_ARTICLES,
+          articles: response.data.doc,
+          articlesTotalRecords: response.total,
+        });
         dispatch({ type: actionTypes.SET_LOADING, payload: false });
         setError(false);
       })
@@ -193,10 +201,15 @@ function Articles({ theme, navigation }) {
 
   ///Inital Call
   useEffect(() => {
-    dispatch({ type: actionTypes.SET_LOADING, payload: true });
-    setPageLoaded(true);
-    fetchCategories();
-    fetchAll();
+    if (
+      (state.articleCategories && state.articleCategories.length === 0) ||
+      (state.articles && state.articles.length === 0)
+    ) {
+      dispatch({ type: actionTypes.SET_LOADING, payload: true });
+      setPageLoaded(true);
+      fetchCategories();
+      fetchAll();
+    }
   }, []);
   useEffect(() => {
     if (
@@ -235,6 +248,11 @@ function Articles({ theme, navigation }) {
         .then(({ data: response }) => {
           setTotalRecords(response.total);
           setVideos((vi) => vi.concat(response.data.doc));
+          dispatch({
+            type: actionTypes.SET_ARTICLES,
+            articles: articles.concat(response.data.doc),
+            articlesTotalRecords: response.total,
+          });
           setLastCall(scroll);
           setError(false);
         })
@@ -276,6 +294,8 @@ function Articles({ theme, navigation }) {
       <Spinner visible={state.loading} />
       {/* For Search */}
       <View>
+        <Text style={styles.title}>Search Now</Text>
+
         <Card style={styles.inputCard}>
           <ModalSelector
             data={categories.map((item) => {
@@ -338,7 +358,7 @@ function Articles({ theme, navigation }) {
             </View>
           </ModalSelector>
         </Card>
-        <Text style={styles.title}>Search Now</Text>
+
         <Card elevation={1} style={{ ...styles.inputCard }}>
           <MaterialIcons name="search" size={32} style={styles.icon} />
           <TextInput
@@ -374,7 +394,7 @@ function Articles({ theme, navigation }) {
               <TouchableOpacity
                 key={item._id}
                 style={styles.articleCard}
-                onPress={() => navigation.navigate('Article', { id: item._id })}
+                onPress={() => navigation.navigate('Article', { item })}
               >
                 <View style={{ flex: 1, alignSelf: 'center' }}>
                   <Image
@@ -391,7 +411,7 @@ function Articles({ theme, navigation }) {
                 </View>
                 <View style={{ flex: 2, marginLeft: 3 }}>
                   <Card.Content>
-                    <Title style={styles.cardtitle}>{item.title}</Title>
+                    <Text style={styles.cardtitle}>{item.title}</Text>
                     <View
                       style={{
                         borderBottomColor: theme.colors.grey,

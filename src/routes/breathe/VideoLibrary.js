@@ -85,14 +85,14 @@ function VideoLibrary({ theme, navigation }) {
     },
   });
   const { state, dispatch } = useContext(GlobalContext);
-  const [videos, setVideos] = useState([]);
+  const [videos, setVideos] = useState(state.videos);
   const [pageLoaded, setPageLoaded] = useState(false);
   const [error, setError] = useState(false);
   const [search, setSearch] = useState(null);
-  const [categories, setCategories] = useState([]);
+  const [categories, setCategories] = useState(state.videosCategories);
   const [scroll, setScroll] = useState(1);
   const [lastCall, setLastCall] = useState(1);
-  const [totalRecords, setTotalRecords] = useState(1);
+  const [totalRecords, setTotalRecords] = useState(state.videosTotalRecords);
   const [selectedCategory, setSelectedCategory] = useState('');
   const [selectedCategoryValue, setSelectedCategoryValue] = useState('');
 
@@ -106,6 +106,10 @@ function VideoLibrary({ theme, navigation }) {
       .then(({ data: response }) => {
         setError(false);
         setCategories([{ name: 'None', _id: '' }, ...response.data.doc]);
+        dispatch({
+          type: actionTypes.SET_VIDEOS_CATEGORIES,
+          videosCategories: [{ name: 'None', _id: '' }, ...response.data.doc],
+        });
       })
       .catch((error) => {
         setError(true);
@@ -129,6 +133,11 @@ function VideoLibrary({ theme, navigation }) {
         setLastCall(1);
         setTotalRecords(response.total);
         setVideos(response.data.doc);
+        dispatch({
+          type: actionTypes.SET_VIDEOS,
+          videos: response.data.doc,
+          videosTotalRecords: response.total,
+        });
         dispatch({ type: actionTypes.SET_LOADING, payload: false });
       })
       .catch((error) => {
@@ -177,10 +186,15 @@ function VideoLibrary({ theme, navigation }) {
 
   //Initial Data render
   useEffect(() => {
-    dispatch({ type: actionTypes.SET_LOADING, payload: true });
-    setPageLoaded(true);
-    fetchCategories();
-    fetchAll();
+    if (
+      (state.videosCategories && state.videosCategories.length === 0) ||
+      (state.videos && state.videos.length === 0)
+    ) {
+      dispatch({ type: actionTypes.SET_LOADING, payload: true });
+      setPageLoaded(true);
+      fetchCategories();
+      fetchAll();
+    }
   }, []);
   useEffect(() => {
     if (
@@ -220,6 +234,11 @@ function VideoLibrary({ theme, navigation }) {
           setVideos((vi) => vi.concat(response.data.doc));
           setLastCall(scroll);
           setError(false);
+          dispatch({
+            type: actionTypes.SET_VIDEOS,
+            videos: videos.concat(response.data.doc),
+            videosTotalRecords: response.total,
+          });
         })
         .catch((error) => {
           setScroll((s) => s - 1);

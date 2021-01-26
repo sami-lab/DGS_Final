@@ -71,28 +71,34 @@ function ConnectCategories({ theme, navigation }) {
     },
   });
   const { state, dispatch } = useContext(GlobalContext);
-  const [categories, setCategories] = useState([]);
+  const [categories, setCategories] = useState(state.connectCategories);
   const [category, setCategory] = useState('');
   useEffect(() => {
-    dispatch({ type: actionTypes.SET_LOADING, payload: true });
-    axios
-      .get('/connectCategories/', {
-        headers: {
-          authorization: 'Bearer ' + state.userToken,
-        },
-      })
-      .then(({ data: response }) => {
-        dispatch({ type: actionTypes.SET_LOADING, payload: false });
-        setCategories(response.data.doc);
-      })
-      .catch((error) => {
-        dispatch({ type: actionTypes.SET_LOADING, payload: false });
-        Alert.alert(
-          'Fail To fetch data',
-          error.response ? error.response.data.message : error.message
-        );
-        return;
-      });
+    if (state.connectCategories && state.connectCategories.length === 0) {
+      dispatch({ type: actionTypes.SET_LOADING, payload: true });
+      axios
+        .get('/connectCategories/', {
+          headers: {
+            authorization: 'Bearer ' + state.userToken,
+          },
+        })
+        .then(({ data: response }) => {
+          dispatch({ type: actionTypes.SET_LOADING, payload: false });
+          setCategories(response.data.doc);
+          dispatch({
+            type: actionTypes.SET_CONNECT_CATEGORIES,
+            connectCategories: response.data.doc,
+          });
+        })
+        .catch((error) => {
+          dispatch({ type: actionTypes.SET_LOADING, payload: false });
+          Alert.alert(
+            'Fail To fetch data',
+            error.response ? error.response.data.message : error.message
+          );
+          return;
+        });
+    }
   }, []);
 
   const submit = () => {

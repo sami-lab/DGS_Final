@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 // import ActionButton from 'react-native-action-button';
 import {
   StyleSheet,
@@ -11,16 +11,16 @@ import {
   TouchableOpacity,
   ScrollView,
 } from 'react-native';
-import {withTheme} from 'react-native-paper';
+import { withTheme } from 'react-native-paper';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import MainHeader from '../../components/mainChildHeader';
-import {GlobalContext} from '../../context/GlobalContext';
+import { GlobalContext } from '../../context/GlobalContext';
 import * as actionTypes from '../../context/actions';
-import axios, {apiUrl} from '../../../axios';
+import axios, { apiUrl } from '../../../axios';
 import Spinner from '../../components/spinner';
 
-const ProfessionalDetails = ({theme, navigation, route}) => {
+const ProfessionalDetails = ({ theme, navigation, route }) => {
   const styles = StyleSheet.create({
     root: {
       flex: 1,
@@ -67,30 +67,30 @@ const ProfessionalDetails = ({theme, navigation, route}) => {
       color: 'white',
     },
   });
-  const {state, dispatch} = useContext(GlobalContext);
-  const [professional, setProfessional] = useState(null);
+  const { state, dispatch } = useContext(GlobalContext);
+  const [professional, setProfessional] = useState(route.params.item);
   const [error, setError] = useState(null);
-  useEffect(() => {
-    const fetchProfessional = async () => {
-      dispatch({type: actionTypes.SET_LOADING, payload: true});
-      try {
-        const res = await axios.get(
-          `/connectProfessionals/${route.params.id}`,
-          {
-            headers: {
-              authorization: 'Bearer ' + state.userToken,
-            },
-          },
-        );
-        setProfessional(res.data.data.doc);
-        dispatch({type: actionTypes.SET_LOADING, payload: false});
-      } catch (err) {
-        dispatch({type: actionTypes.SET_LOADING, payload: false});
-        setError(err);
-      }
-    };
-    fetchProfessional();
-  }, []);
+  // useEffect(() => {
+  //   const fetchProfessional = async () => {
+  //     dispatch({type: actionTypes.SET_LOADING, payload: true});
+  //     try {
+  //       const res = await axios.get(
+  //         `/connectProfessionals/${route.params.id}`,
+  //         {
+  //           headers: {
+  //             authorization: 'Bearer ' + state.userToken,
+  //           },
+  //         },
+  //       );
+  //       setProfessional(res.data.data.doc);
+  //       dispatch({type: actionTypes.SET_LOADING, payload: false});
+  //     } catch (err) {
+  //       dispatch({type: actionTypes.SET_LOADING, payload: false});
+  //       setError(err);
+  //     }
+  //   };
+  //   fetchProfessional();
+  // }, []);
   const openDial = () => {
     if (Platform.OS === 'android') {
       Linking.openURL(`tel:${professional.phone}`);
@@ -109,9 +109,9 @@ const ProfessionalDetails = ({theme, navigation, route}) => {
           onPress: () => navigation.navigate('ProfessionalDetails'),
           style: 'default',
         },
-        {text: 'Back', onPress: () => navigation.goBack()},
+        { text: 'Back', onPress: () => navigation.goBack() },
       ],
-      {cancelable: false},
+      { cancelable: false }
     );
   }
 
@@ -124,14 +124,16 @@ const ProfessionalDetails = ({theme, navigation, route}) => {
           <Spinner visible={state.loading} />
           {professional != null && (
             <>
-              <View style={{alignItems: 'center', justifyContent: 'flex-end'}}>
+              <View
+                style={{ alignItems: 'center', justifyContent: 'flex-end' }}
+              >
                 <Image
                   style={{
                     width: 150,
                     height: 150,
                     borderRadius: 140 / 2,
                   }}
-                  source={{uri: apiUrl + '/files/' + professional.image}}
+                  source={{ uri: apiUrl + '/files/' + professional.image }}
                 />
               </View>
               <View
@@ -139,7 +141,8 @@ const ProfessionalDetails = ({theme, navigation, route}) => {
                   alignItems: 'center',
                   margin: 5,
                   paddingHorizontal: 10,
-                }}>
+                }}
+              >
                 <Text style={styles.title}>{professional.name}</Text>
                 <View
                   style={{
@@ -155,7 +158,8 @@ const ProfessionalDetails = ({theme, navigation, route}) => {
                 style={styles.mycard}
                 onPress={() => {
                   Linking.openURL(`mailto:${professional.email}`);
-                }}>
+                }}
+              >
                 <View style={styles.cardContent}>
                   <MaterialCommunityIcons
                     name="email-outline"
@@ -176,7 +180,8 @@ const ProfessionalDetails = ({theme, navigation, route}) => {
               </TouchableOpacity>
               <TouchableOpacity
                 style={styles.mycard}
-                onPress={() => openDial()}>
+                onPress={() => openDial()}
+              >
                 <View style={styles.cardContent}>
                   <MaterialCommunityIcons
                     name="phone"
@@ -201,7 +206,8 @@ const ProfessionalDetails = ({theme, navigation, route}) => {
                   professional.website
                     ? Linking.openURL(professional.website)
                     : null
-                }>
+                }
+              >
                 <View style={styles.cardContent}>
                   <MaterialCommunityIcons
                     name="web"
