@@ -1,9 +1,9 @@
 import React from 'react';
-import {StyleSheet, Text, View, Dimensions, Image} from 'react-native';
-import {Card, withTheme, Button} from 'react-native-paper';
-import MainHeader from '../../components/mainHeader';
+import { StyleSheet, Text, View, Dimensions, Image } from 'react-native';
+import { Card, withTheme, Button } from 'react-native-paper';
+import MainHeader from '../../components/mainChildHeader';
 
-function Breathe({theme, navigation, route}) {
+function Breathe({ theme, navigation, route }) {
   const styles = StyleSheet.create({
     root: {
       flex: 1,
@@ -35,8 +35,8 @@ function Breathe({theme, navigation, route}) {
 
   return (
     <View style={styles.root}>
-      <MainHeader />
-      <View style={{justifyContent: 'center', flex: 1}}>
+      <MainHeader navigation={navigation} />
+      <View style={{ justifyContent: 'center', flex: 1 }}>
         <Image
           source={require('../../assets/dev/watch.png')}
           style={{
@@ -46,18 +46,19 @@ function Breathe({theme, navigation, route}) {
             alignSelf: 'center',
           }}
         />
-        <Card.Content style={{alignItems: 'center'}}>
+        <Card.Content style={{ alignItems: 'center' }}>
           <Text style={styles.title}>
             Watch inspiring videos that will help you feel calm, confident and
             inspired.
           </Text>
         </Card.Content>
 
-        <View style={{alignItems: 'center', justifyContent: 'center'}}>
+        <View style={{ alignItems: 'center', justifyContent: 'center' }}>
           <Button
             color="#fff"
             style={styles.buttonStyles}
-            onPress={() => navigation.navigate('VideoLibrary')}>
+            onPress={() => navigation.navigate('VideoLibrary')}
+          >
             <Text style={styles.buttonText}> Watch now!</Text>{' '}
           </Button>
         </View>

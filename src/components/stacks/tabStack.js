@@ -1,14 +1,15 @@
 import React from 'react';
-import {Text} from 'react-native';
+import { Text } from 'react-native';
 
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { BottomTabBar } from '@react-navigation/bottom-tabs';
+import Home from '../../routes/Home/home';
 import AskJackie from '../../components/stacks/askJackieStack';
 import Articles from '../../components/stacks/articleStack';
 import Connect from '../../components/stacks/connectStack';
 import Breathe from '../../components/stacks/breatheStack';
 import Love from '../../components/stacks/loveStack';
-import {withTheme} from 'react-native-paper';
+import { withTheme } from 'react-native-paper';
 import Ask from '../../assets/dev/askTab.svg';
 import ConnectSvg from '../../assets/dev/connectTab.svg';
 import ArticleSvg from '../../assets/dev/articleTab.svg';
@@ -17,11 +18,17 @@ import ImageGallary from '../../assets/dev/imageGallaryTab.svg';
 
 const Tab = createBottomTabNavigator();
 
-function TabScreen({theme}) {
+function TabScreen(props) {
+  const { theme } = props;
   return (
     <Tab.Navigator
-      screenOptions={({route}) => ({
-        tabBarIcon: ({color}) => {
+      screenOptions={({ route }) => ({
+        tabBarButton: ['Home'].includes(route.name)
+          ? () => {
+              return null;
+            }
+          : undefined,
+        tabBarIcon: ({ color }) => {
           let iconName;
 
           if (route.name === 'AskJackie') {
@@ -68,12 +75,14 @@ function TabScreen({theme}) {
         inactiveTintColor: theme.colors.dark,
         activeBackgroundColor: theme.colors.light,
         //inactiveBackgroundColor: '#00aaff',
-      }}>
+      }}
+      initialRouteName="Home"
+    >
       <Tab.Screen
         name="AskJackie"
         component={AskJackie}
         options={{
-          tabBarLabel: ({tintColor, focused}) => (
+          tabBarLabel: ({ tintColor, focused }) => (
             <Text
               style={
                 focused
@@ -89,7 +98,8 @@ function TabScreen({theme}) {
                       paddingTop: 5,
                       color: theme.colors.grey,
                     }
-              }>
+              }
+            >
               Ask Me
             </Text>
           ),
@@ -99,7 +109,7 @@ function TabScreen({theme}) {
         name="Articles"
         component={Articles}
         options={{
-          tabBarLabel: ({tintColor, focused}) => (
+          tabBarLabel: ({ tintColor, focused }) => (
             <Text
               style={
                 focused
@@ -115,7 +125,8 @@ function TabScreen({theme}) {
                       paddingTop: 5,
                       color: theme.colors.grey,
                     }
-              }>
+              }
+            >
               Learn with Me
             </Text>
           ),
@@ -125,7 +136,7 @@ function TabScreen({theme}) {
         name="Connect"
         component={Connect}
         options={{
-          tabBarLabel: ({tintColor, focused}) => (
+          tabBarLabel: ({ tintColor, focused }) => (
             <Text
               style={
                 focused
@@ -141,7 +152,8 @@ function TabScreen({theme}) {
                       paddingTop: 5,
                       color: theme.colors.grey,
                     }
-              }>
+              }
+            >
               Connect
             </Text>
           ),
@@ -151,7 +163,7 @@ function TabScreen({theme}) {
         name="Breathe"
         component={Breathe}
         options={{
-          tabBarLabel: ({tintColor, focused}) => (
+          tabBarLabel: ({ tintColor, focused }) => (
             <Text
               style={
                 focused
@@ -167,7 +179,8 @@ function TabScreen({theme}) {
                       paddingTop: 5,
                       color: theme.colors.grey,
                     }
-              }>
+              }
+            >
               Watch Me
             </Text>
           ),
@@ -177,7 +190,7 @@ function TabScreen({theme}) {
         name="Love"
         component={Love}
         options={{
-          tabBarLabel: ({tintColor, focused}) => (
+          tabBarLabel: ({ tintColor, focused }) => (
             <Text
               style={
                 focused
@@ -193,12 +206,14 @@ function TabScreen({theme}) {
                       paddingTop: 5,
                       color: theme.colors.grey,
                     }
-              }>
+              }
+            >
               A Dose of Love
             </Text>
           ),
         }}
       />
+      <Tab.Screen name="Home" component={Home} />
     </Tab.Navigator>
   );
 }

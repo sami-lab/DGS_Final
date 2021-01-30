@@ -1,8 +1,8 @@
-import React, {useContext} from 'react';
-import {StyleSheet, Text, View, Dimensions, Image} from 'react-native';
-import {Card, withTheme, Button} from 'react-native-paper';
-import MainHeader from '../../components/mainHeader';
-function Connect({theme, navigation}) {
+import React, { useContext } from 'react';
+import { StyleSheet, Text, View, Dimensions, Image } from 'react-native';
+import { Card, withTheme, Button } from 'react-native-paper';
+import MainHeader from '../../components/mainChildHeader';
+function Connect({ theme, navigation }) {
   const styles = StyleSheet.create({
     root: {
       flex: 1,
@@ -34,9 +34,9 @@ function Connect({theme, navigation}) {
 
   return (
     <View style={styles.root}>
-      <MainHeader />
+      <MainHeader navigation={navigation} />
 
-      <View style={{justifyContent: 'center', flex: 1}}>
+      <View style={{ justifyContent: 'center', flex: 1 }}>
         <Image
           source={require('../../assets/dev/connect.png')}
           style={{
@@ -46,7 +46,7 @@ function Connect({theme, navigation}) {
             alignSelf: 'center',
           }}
         />
-        <Card.Content style={{alignItems: 'center'}}>
+        <Card.Content style={{ alignItems: 'center' }}>
           <Text style={styles.title}>
             Contact trusted professionals, including divorce attorneys,
             financial planners, real estate agents, therapists, divorce coaches
@@ -54,11 +54,12 @@ function Connect({theme, navigation}) {
           </Text>
         </Card.Content>
 
-        <View style={{alignItems: 'center', justifyContent: 'center'}}>
+        <View style={{ alignItems: 'center', justifyContent: 'center' }}>
           <Button
             color="#fff"
             style={styles.buttonStyles}
-            onPress={() => navigation.navigate('ConnectCategories')}>
+            onPress={() => navigation.navigate('ConnectCategories')}
+          >
             <Text style={styles.buttonText}> Connect now!</Text>{' '}
           </Button>
         </View>

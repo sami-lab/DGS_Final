@@ -1,10 +1,12 @@
 import React from 'react';
-import {createStackNavigator} from '@react-navigation/stack';
+import { createStackNavigator } from '@react-navigation/stack';
 
-import {StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native';
 
 import Love from '../../routes/Love/index';
 import ImageGallary from '../../routes/Love/ImageGallary';
+import images from '../../routes/Love/images';
+import image from '../../routes/Love/testImage';
 
 const Stack = createStackNavigator();
 
@@ -24,16 +26,26 @@ const myOptions = {
 };
 export default function LoveStack() {
   return (
-    <Stack.Navigator headerMode="none">
+    <Stack.Navigator headerMode="none" initialRouteName="Love">
       <Stack.Screen
         name="Love"
         component={Love}
-        options={{...myOptions, title: 'Love'}}
+        options={{ ...myOptions, title: 'Love' }}
       />
       <Stack.Screen
         name="ImageGallary"
         component={ImageGallary}
-        options={{...myOptions, title: 'Image Gallary'}}
+        options={{ ...myOptions, title: 'Image Gallary' }}
+      />
+      <Stack.Screen
+        name="images"
+        component={images}
+        options={{ ...myOptions, title: 'Image Gallary' }}
+      />
+      <Stack.Screen
+        name="image"
+        component={image}
+        options={{ ...myOptions, title: 'Image Gallary' }}
       />
     </Stack.Navigator>
   );

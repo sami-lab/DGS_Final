@@ -7,10 +7,10 @@ import {
   ImageBackground,
   Image,
 } from 'react-native';
-import {Card, withTheme, Colors, Button} from 'react-native-paper';
-import MainHeader from '../../components/mainHeader';
+import { Card, withTheme, Colors, Button } from 'react-native-paper';
+import MainHeader from '../../components/mainChildHeader';
 
-function AskJackie({theme, navigation}) {
+function AskJackie({ theme, navigation }) {
   const styles = StyleSheet.create({
     root: {
       flex: 1,
@@ -43,9 +43,9 @@ function AskJackie({theme, navigation}) {
 
   return (
     <View style={styles.root}>
-      <MainHeader />
+      <MainHeader navigation={navigation} />
 
-      <View style={{justifyContent: 'center', flex: 1}}>
+      <View style={{ justifyContent: 'center', flex: 1 }}>
         <Image
           source={require('../../assets/dev/askJackie.png')}
           style={{
@@ -55,17 +55,18 @@ function AskJackie({theme, navigation}) {
             alignSelf: 'center',
           }}
         />
-        <Card.Content style={{alignItems: 'center'}}>
+        <Card.Content style={{ alignItems: 'center' }}>
           <Text style={styles.title}>
             Ask Jackie a question about divorce or dating and she will try to
             answer it soon.{' '}
           </Text>
         </Card.Content>
-        <View style={{alignItems: 'center', justifyContent: 'center'}}>
+        <View style={{ alignItems: 'center', justifyContent: 'center' }}>
           <Button
             color="#fff"
             style={styles.buttonStyles}
-            onPress={() => navigation.navigate('Questions')}>
+            onPress={() => navigation.navigate('Questions')}
+          >
             <Text style={styles.buttonText}> Ask NOW!</Text>{' '}
           </Button>
         </View>
