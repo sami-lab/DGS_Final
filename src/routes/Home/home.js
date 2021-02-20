@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useState } from 'react';
 import {
   StyleSheet,
   Text,
@@ -7,8 +7,11 @@ import {
   TouchableOpacity,
   Image,
   ScrollView,
+  Linking,
 } from 'react-native';
 import { Card, withTheme, Button } from 'react-native-paper';
+import { WebView } from 'react-native-webview';
+
 import MainHeader from '../../components/mainHeader';
 function Home({ theme, navigation }) {
   const styles = StyleSheet.create({
@@ -32,7 +35,20 @@ function Home({ theme, navigation }) {
       textAlign: 'center',
     },
   });
+  const [openWebView, setOpenWebView] = useState(false);
+  const [webViewUrl, setWebViewUrl] = useState('');
 
+  const Webiew = (url) => {
+    return (
+      <View style={{ width: '100%', height: Dimensions.get('screen').height }}>
+        <WebView
+          javaScriptEnabled={true}
+          downStorageEnabled={true}
+          source={{ uri: url }}
+        />
+      </View>
+    );
+  };
   return (
     <ScrollView style={styles.root}>
       <MainHeader />
@@ -57,8 +73,8 @@ function Home({ theme, navigation }) {
             source={require('../../assets/dev/askJackie.png')}
             style={{
               borderRadius: 15,
-              width: 95,
-              height: 100,
+              width: 90,
+              height: 90,
             }}
           />
         </TouchableOpacity>
@@ -72,8 +88,8 @@ function Home({ theme, navigation }) {
             source={require('../../assets/dev/learn.png')}
             style={{
               borderRadius: 15,
-              width: 95,
-              height: 100,
+              width: 90,
+              height: 90,
             }}
           />
         </TouchableOpacity>
@@ -87,8 +103,8 @@ function Home({ theme, navigation }) {
             source={require('../../assets/dev/connect.png')}
             style={{
               borderRadius: 15,
-              width: 95,
-              height: 100,
+              width: 90,
+              height: 90,
             }}
           />
         </TouchableOpacity>
@@ -102,8 +118,8 @@ function Home({ theme, navigation }) {
             source={require('../../assets/dev/watch.png')}
             style={{
               borderRadius: 15,
-              width: 95,
-              height: 100,
+              width: 90,
+              height: 90,
             }}
           />
         </TouchableOpacity>
@@ -117,22 +133,112 @@ function Home({ theme, navigation }) {
             source={require('../../assets/dev/love.png')}
             style={{
               borderRadius: 15,
-              width: 95,
-              height: 100,
+              width: 90,
+              height: 90,
+            }}
+          />
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.imageCard}
+          onPress={() => {
+            navigation.navigate('Journal');
+          }}
+        >
+          <Image
+            source={require('../../assets/dev/JournalYourJourney.png')}
+            style={{
+              width: 90,
+              height: 90,
+            }}
+          />
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.imageCard}
+          onPress={() => {
+            navigation.navigate('Shop');
+          }}
+        >
+          <Image
+            source={require('../../assets/dev/DivorcedGirlDiscounts.png')}
+            style={{
+              borderRadius: 2,
+              width: 90,
+              height: 90,
+            }}
+          />
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.imageCard}
+          onPress={() => {
+            navigation.navigate('Books');
+          }}
+        >
+          <Image
+            source={require('../../assets/dev/BooksforYou.png')}
+            style={{
+              borderRadius: 15,
+              width: 90,
+              height: 90,
+            }}
+          />
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.imageCard}
+          onPress={() => {
+            Linking.openURL('https://www.divorcedgirlsmiling.com/');
+          }}
+        >
+          <Image
+            source={require('../../assets/dev/SiteandPodcast.png')}
+            style={{
+              borderRadius: 15,
+              width: 90,
+              height: 90,
+            }}
+          />
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.imageCard}
+          onPress={() => {
+            Linking.openURL('https://www.divorcedgirlsmiling.com/');
+          }}
+        >
+          <Image
+            source={require('../../assets/dev/SiteandPodcast.png')}
+            style={{
+              borderRadius: 15,
+              width: 90,
+              height: 90,
+            }}
+          />
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.imageCard}
+          onPress={() => {
+            Linking.openURL('https://www.facebook.com/');
+          }}
+        >
+          <Image
+            source={require('../../assets/dev/SiteandPodcast.png')}
+            style={{
+              borderRadius: 15,
+              width: 90,
+              height: 90,
             }}
           />
         </TouchableOpacity>
       </View>
-      <Image
+
+      {/* <Image
         resizeMode="contain"
         source={require('../../assets/dev/logo.png')}
         style={{
           alignSelf: 'center',
           borderRadius: 15,
-          width: Dimensions.get('window').width * 0.85,
+          width: Dimensions.get('window').width * 0.90,
           height: Dimensions.get('window').height * 0.3,
         }}
-      />
+      /> */}
     </ScrollView>
   );
 }

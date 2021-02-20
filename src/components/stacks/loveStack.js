@@ -7,6 +7,7 @@ import Love from '../../routes/Love/index';
 import ImageGallary from '../../routes/Love/ImageGallary';
 import images from '../../routes/Love/images';
 import image from '../../routes/Love/testImage';
+import test from '../../routes/Love/test';
 
 const Stack = createStackNavigator();
 
@@ -45,6 +46,11 @@ export default function LoveStack() {
       <Stack.Screen
         name="image"
         component={image}
+        options={{ ...myOptions, title: 'Image Gallary' }}
+      />
+      <Stack.Screen
+        name="test"
+        component={test}
         options={{ ...myOptions, title: 'Image Gallary' }}
       />
     </Stack.Navigator>

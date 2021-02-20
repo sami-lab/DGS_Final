@@ -27,6 +27,7 @@
     "react-native-document-picker": "^4.2.0",
     "react-native-dropdown-picker": "^3.7.6",
     "react-native-gesture-handler": "^1.9.0",
+    "react-native-infinite-masonry": "0.0.3",
     "react-native-keyboard-aware-scrollview": "^2.1.0",
     "react-native-loading-spinner-overlay": "^2.0.0",
     "react-native-masonry-list": "^2.16.1",

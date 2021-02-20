@@ -9,6 +9,10 @@ import Articles from '../../components/stacks/articleStack';
 import Connect from '../../components/stacks/connectStack';
 import Breathe from '../../components/stacks/breatheStack';
 import Love from '../../components/stacks/loveStack';
+import ShopStack from '../../components/stacks/shopStack';
+import BookStack from '../../components/stacks/bookStack';
+import JournalStack from '../../components/stacks/journalStack';
+
 import { withTheme } from 'react-native-paper';
 import Ask from '../../assets/dev/askTab.svg';
 import ConnectSvg from '../../assets/dev/connectTab.svg';
@@ -23,7 +27,7 @@ function TabScreen(props) {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
-        tabBarButton: ['Home'].includes(route.name)
+        tabBarButton: ['Home', 'Shop', 'Books', 'Journal'].includes(route.name)
           ? () => {
               return null;
             }
@@ -213,6 +217,10 @@ function TabScreen(props) {
           ),
         }}
       />
+      <Tab.Screen name="Shop" component={ShopStack} />
+      <Tab.Screen name="Books" component={BookStack} />
+      <Tab.Screen name="Journal" component={JournalStack} />
+
       <Tab.Screen name="Home" component={Home} />
     </Tab.Navigator>
   );
