@@ -77,17 +77,16 @@ const Details = ({ theme, navigation, route }) => {
     },
   });
   const [note, setNote] = useState(route.params.item);
-
   return (
     <>
       <View style={styles.root}>
         <ScrollView>
-          <MainHeader navigation={navigation} />
+          <MainHeader navigation={navigation} backRoute="index" />
 
           {note != null && (
             <>
               <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-                {note.image && (
+                {note.image && note.image !== null && (
                   <Image
                     resizeMode="cover"
                     style={{

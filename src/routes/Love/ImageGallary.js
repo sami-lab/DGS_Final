@@ -166,7 +166,7 @@ function ImageGallary({ theme, navigation }) {
   }, [scroll]);
   return (
     <View style={styles.root}>
-      <MainHeader navigation={navigation} />
+      <MainHeader navigation={navigation} backRoute="Love" />
 
       <Spinner visible={state.loading} />
 

@@ -100,7 +100,7 @@ function Article({ theme, navigation, route }) {
   return (
     <View style={styles.root}>
       <Spinner visible={state.loading} />
-      <MainHeader navigation={navigation} />
+      <MainHeader navigation={navigation} backRoute="Articles" />
 
       {article != null ? (
         <ScrollView persistentScrollbar={true}>

@@ -90,7 +90,7 @@ function connectCategories({ theme, navigation, route }) {
   }, [category]);
   return (
     <View style={styles.root}>
-      <MainHeader navigation={navigation} />
+      <MainHeader navigation={navigation} backRoute="ConnectCategories" />
 
       <Spinner visible={state.loading} />
       {professionals.length > 0 ? (

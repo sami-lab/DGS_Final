@@ -124,7 +124,7 @@ function Journal({ theme, navigation, route }) {
   };
   return (
     <View style={styles.root}>
-      <MainHeader navigation={navigation} />
+      <MainHeader navigation={navigation} backRoute="Home" />
 
       {journals.length > 0 ? (
         <FlatList

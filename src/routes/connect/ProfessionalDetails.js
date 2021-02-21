@@ -119,7 +119,10 @@ const ProfessionalDetails = ({ theme, navigation, route }) => {
     <>
       <View style={styles.root}>
         <ScrollView>
-          <MainHeader navigation={navigation} />
+          <MainHeader
+            navigation={navigation}
+            backRoute="ConnectProfessionals"
+          />
 
           <Spinner visible={state.loading} />
           {professional != null && (

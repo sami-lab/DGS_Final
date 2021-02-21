@@ -99,7 +99,7 @@ function Create({ theme, navigation, route }) {
   );
   const descriptionRef = useRef();
   const [singleFile, setSingleFile] = useState(
-    getDetails('image') ? { name: getDetails('image') } : null
+    getDetails('image') ? { name: getDetails('image') } : undefined
   );
   const [enableshift, setenableShift] = useState(false);
 
@@ -182,7 +182,7 @@ function Create({ theme, navigation, route }) {
     <View style={styles.root}>
       <KeyboardAvoidingView behavior="position" enabled={enableshift}>
         <Spinner visible={state.loading} />
-        <MainHeader navigation={navigation} />
+        <MainHeader navigation={navigation} backRoute="index" />
         <Text style={styles.title}>
           {route.params ? 'Update Note' : 'Add a note'}
         </Text>

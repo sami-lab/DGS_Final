@@ -153,7 +153,7 @@ function Questions({ theme, navigation }) {
     <View style={styles.root}>
       <KeyboardAvoidingView behavior="position" enabled={enableshift}>
         <Spinner visible={state.loading} />
-        <MainHeader navigation={navigation} />
+        <MainHeader navigation={navigation} backRoute="AskJackie" />
         <Text style={styles.title}>Ask a question</Text>
         <Card elevation={1} style={styles.inputCard}>
           <TextInput

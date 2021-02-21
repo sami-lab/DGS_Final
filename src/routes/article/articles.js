@@ -291,7 +291,7 @@ function Articles({ theme, navigation }) {
     <View style={styles.root}>
       <MainHeader navigation={navigation} />
 
-      <Spinner visible={state.loading} />
+      <Spinner visible={state.loading} backRoute="Grow" />
       {/* For Search */}
       <View>
         <Text style={styles.title}>Search Now</Text>

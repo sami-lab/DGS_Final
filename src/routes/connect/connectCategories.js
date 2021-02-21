@@ -113,7 +113,7 @@ function ConnectCategories({ theme, navigation }) {
   return (
     <View style={styles.root}>
       <Spinner visible={state.loading} />
-      <MainHeader navigation={navigation} />
+      <MainHeader navigation={navigation} backRoute="Connect" />
 
       <View style={{ justifyContent: 'center', flex: 1 }}>
         <Card.Content style={{ alignItems: 'center' }}>

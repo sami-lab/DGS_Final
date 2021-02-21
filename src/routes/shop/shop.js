@@ -76,7 +76,7 @@ function Shop({ theme, navigation, route }) {
   }, []);
   return (
     <View style={styles.root}>
-      <MainHeader navigation={navigation} />
+      <MainHeader navigation={navigation} backRoute="Home" />
 
       <Spinner visible={state.loading} />
       {shops.length > 0 ? (

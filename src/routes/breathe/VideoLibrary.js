@@ -275,7 +275,7 @@ function VideoLibrary({ theme, navigation }) {
   }, [scroll]);
   return (
     <View style={styles.root}>
-      <MainHeader navigation={navigation} />
+      <MainHeader navigation={navigation} backRoute="Breathe" />
       <Spinner visible={state.loading} />
 
       <View>

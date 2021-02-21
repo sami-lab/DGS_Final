@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, { useContext } from 'react';
 import {
   StyleSheet,
   Dimensions,
@@ -8,20 +8,20 @@ import {
   TouchableOpacity,
   Image,
 } from 'react-native';
-import {useTheme, Avatar} from 'react-native-paper';
+import { useTheme, Avatar } from 'react-native-paper';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import AsyncStorage from '@react-native-community/async-storage';
 
-import {GlobalContext} from '../context/GlobalContext';
+import { GlobalContext } from '../context/GlobalContext';
 import * as actionTypes from '../context/actions';
-export default function mainChildHeader({navigation}) {
+export default function mainChildHeader({ navigation, backRoute }) {
   const theme = useTheme();
-  const {dispatch} = useContext(GlobalContext);
+  const { dispatch } = useContext(GlobalContext);
   const signOut = async () => {
     try {
       await AsyncStorage.removeItem('userToken');
       await AsyncStorage.removeItem('user');
-      dispatch({type: actionTypes.LOGOUT});
+      dispatch({ type: actionTypes.LOGOUT });
     } catch (e) {
       Alert.alert('someting went wrong');
     }
@@ -36,10 +36,14 @@ export default function mainChildHeader({navigation}) {
         justifyContent: 'space-between',
         alignItems: 'center',
         flexDirection: 'row',
-      }}>
+      }}
+    >
       <TouchableOpacity
-        style={{marginLeft: 30, marginTop: -25}}
-        onPress={() => navigation.goBack()}>
+        style={{ marginLeft: 30, marginTop: -25 }}
+        onPress={() =>
+          backRoute ? navigation.navigate(backRoute) : navigation.goBack()
+        }
+      >
         <Image
           resizeMode="stretch"
           source={require('../assets/dev/arrow-left.png')}

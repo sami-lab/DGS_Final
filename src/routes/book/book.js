@@ -78,7 +78,7 @@ function Book({ theme, navigation, route }) {
     <View style={styles.root}>
       <MainHeader navigation={navigation} />
 
-      <Spinner visible={state.loading} />
+      <Spinner visible={state.loading} backRoute="Home" />
       {books.length > 0 ? (
         <ScrollView style={{ marginTop: 15 }} persistentScrollbar={true}>
           {books.map((item) => (

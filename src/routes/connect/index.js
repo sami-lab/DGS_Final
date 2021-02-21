@@ -34,7 +34,7 @@ function Connect({ theme, navigation }) {
 
   return (
     <View style={styles.root}>
-      <MainHeader navigation={navigation} />
+      <MainHeader navigation={navigation} backRoute="Home" />
 
       <View style={{ justifyContent: 'center', flex: 1 }}>
         <Image
