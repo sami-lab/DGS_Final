@@ -87,9 +87,21 @@ function Journal({ theme, navigation, route }) {
       });
   };
 
-  // useEffect(() => {
-  //   fetchShops();
-  // }, []);
+  const deleteNote = (id) => {
+    axios
+      .delete(`/journal/${id}`, {
+        headers: {
+          authorization: 'Bearer ' + state.userToken,
+        },
+      })
+      .then((deletedEmp) => {
+        Alert.alert(`Recorded deleted sucessfully`);
+        setJournals(journals.filter((i) => i._id !== id));
+      })
+      .catch((err) => {
+        Alert.alert('Opps! Someting went wrong');
+      });
+  };
   useFocusEffect(
     React.useCallback(() => {
       fetchShops();
@@ -111,13 +123,37 @@ function Journal({ theme, navigation, route }) {
           }}
         >
           <Text style={styles.text}>{item.title}</Text>
-          <IconButton
-            icon="circle-edit-outline"
-            size={20}
-            onPress={() => {
-              navigation.navigate('Create', item);
-            }}
-          />
+          <View style={{ flexDirection: 'row' }}>
+            <IconButton
+              icon="delete"
+              size={20}
+              style={{ marginRight: 2 }}
+              color={theme.colors.darkPink}
+              onPress={() => {
+                Alert.alert(
+                  'Delete',
+                  'Are you sure you want to delete note',
+                  [
+                    {
+                      text: 'Cancel',
+                      onPress: () => console.log('Cancel Pressed'),
+                      style: 'cancel',
+                    },
+                    { text: 'OK', onPress: () => deleteNote(item._id) },
+                  ],
+                  { cancelable: false }
+                );
+              }}
+            />
+            <IconButton
+              icon="circle-edit-outline"
+              size={20}
+              color={theme.colors.darkPink}
+              onPress={() => {
+                navigation.navigate('Create', item);
+              }}
+            />
+          </View>
         </View>
       </Card>
     );

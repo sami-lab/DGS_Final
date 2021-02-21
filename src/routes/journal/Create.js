@@ -156,7 +156,7 @@ function Create({ theme, navigation, route }) {
     const data = new FormData();
     data.append('title', title);
     data.append('description', description);
-    data.append('image', singleFile);
+    if (singleFile && singleFile !== null) data.append('image', singleFile);
 
     // //apply validation here first
 
