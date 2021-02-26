@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text } from 'react-native';
+import { Text, Dimensions } from 'react-native';
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { BottomTabBar } from '@react-navigation/bottom-tabs';
@@ -49,7 +49,7 @@ function TabScreen(props) {
           if (route.name === 'AskJackie') {
             return <Ask width="60" height="60" fill={color} />;
           } else if (route.name === 'Home')
-            return <MaterialIcons name="home" size={36} color={color} />;
+            return <MaterialIcons name="home" size={42} color={color} />;
           else if (route.name === 'Connect') {
             return <ConnectSvg width="60" height="60" fill={color} />;
           } else if (route.name === 'Articles') {
@@ -65,31 +65,37 @@ function TabScreen(props) {
       })}
       tabBarOptions={{
         tabStyle: {
-          paddingTop: 6,
+          borderTopLeftRadius: 40,
+          borderTopRightRadius: 40,
+          //borderRadius: 40,
+          backgroundColor: theme.colors.light,
         },
 
         keyboardHidesTabBar: true,
         style: {
-          height: 70,
-          backgroundColor: theme.colors.light,
-
+          height: 64,
+          backgroundColor: 'transparent',
           borderTopColor: 'transparent',
-          elevation: 10,
-          shadowColor: '#313C4F59',
-          shadowOffset: {
-            height: 1,
-          },
+          elevation: 0,
+          position: 'absolute',
+          //left: '37%',
+          //bottom: 5,
+          width: '100%',
+          //width: Dimensions.get('window').width * 0.3,
+          alignSelf: 'center',
+          justifyContent: 'center',
+
           borderTopWidth: 0,
-          shadowRadius: 1,
         },
         indicatorStyle: {
           width: 0,
           height: 0,
           elevation: 0,
         },
+        //showLabel: false,
         activeTintColor: theme.colors.darkPink,
         inactiveTintColor: theme.colors.darkPink,
-        activeBackgroundColor: theme.colors.light,
+        activeBackgroundColor: 'transparent',
         //inactiveBackgroundColor: '#00aaff',
       }}
       initialRouteName="Home"
