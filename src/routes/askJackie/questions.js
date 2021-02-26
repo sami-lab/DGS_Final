@@ -137,7 +137,10 @@ function Questions({ theme, navigation }) {
       )
       .then(({ data: response }) => {
         dispatch({ type: actionTypes.SET_LOADING, payload: false });
-        Alert.alert('Success', 'Question Send to admin Successfully');
+        Alert.alert(
+          'Successfully Sent To Jackie!',
+          'Jackie and The Divorced Girl Smiling Team will respond as soon as possible! Thank You!'
+        );
         navigation.navigate('AskJackie');
       })
       .catch((error) => {

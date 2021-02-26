@@ -3,7 +3,7 @@ import { Text } from 'react-native';
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { BottomTabBar } from '@react-navigation/bottom-tabs';
-import Home from '../../routes/Home/home';
+import Home from '../../components/stacks/homeStack';
 import AskJackie from '../../components/stacks/askJackieStack';
 import Articles from '../../components/stacks/articleStack';
 import Connect from '../../components/stacks/connectStack';
@@ -14,6 +14,7 @@ import BookStack from '../../components/stacks/bookStack';
 import JournalStack from '../../components/stacks/journalStack';
 
 import { withTheme } from 'react-native-paper';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Ask from '../../assets/dev/askTab.svg';
 import ConnectSvg from '../../assets/dev/connectTab.svg';
 import ArticleSvg from '../../assets/dev/articleTab.svg';
@@ -24,10 +25,20 @@ const Tab = createBottomTabNavigator();
 
 function TabScreen(props) {
   const { theme } = props;
+
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
-        tabBarButton: ['Home', 'Shop', 'Books', 'Journal'].includes(route.name)
+        tabBarButton: [
+          'Shop',
+          'Books',
+          'Journal',
+          'AskJackie',
+          'Articles',
+          'Connect',
+          'Breathe',
+          'Love',
+        ].includes(route.name)
           ? () => {
               return null;
             }
@@ -37,7 +48,9 @@ function TabScreen(props) {
 
           if (route.name === 'AskJackie') {
             return <Ask width="60" height="60" fill={color} />;
-          } else if (route.name === 'Connect') {
+          } else if (route.name === 'Home')
+            return <MaterialIcons name="home" size={36} color={color} />;
+          else if (route.name === 'Connect') {
             return <ConnectSvg width="60" height="60" fill={color} />;
           } else if (route.name === 'Articles') {
             return <ArticleSvg width="60" height="60" fill={color} />;
@@ -66,7 +79,6 @@ function TabScreen(props) {
           shadowOffset: {
             height: 1,
           },
-
           borderTopWidth: 0,
           shadowRadius: 1,
         },
@@ -76,7 +88,7 @@ function TabScreen(props) {
           elevation: 0,
         },
         activeTintColor: theme.colors.darkPink,
-        inactiveTintColor: theme.colors.dark,
+        inactiveTintColor: theme.colors.darkPink,
         activeBackgroundColor: theme.colors.light,
         //inactiveBackgroundColor: '#00aaff',
       }}

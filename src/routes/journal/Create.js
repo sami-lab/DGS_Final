@@ -184,7 +184,7 @@ function Create({ theme, navigation, route }) {
         <Spinner visible={state.loading} />
         <MainHeader navigation={navigation} backRoute="index" />
         <Text style={styles.title}>
-          {route.params ? 'Update Note' : 'Add a note'}
+          {route.params ? 'Update Journal' : 'Journal Your Thoughts'}
         </Text>
         <Card elevation={1} style={styles.inputCard}>
           <TextInput
@@ -232,7 +232,7 @@ function Create({ theme, navigation, route }) {
           width: Dimensions.get('screen').width * 0.85,
         }}
       >
-        <Button
+        {/* <Button
           color="#fff"
           style={{
             ...styles.buttonStyles,
@@ -245,7 +245,7 @@ function Create({ theme, navigation, route }) {
         >
           <Text style={styles.buttonText1}>Choose File</Text>{' '}
           <Entypo name="attachment" size={10} />
-        </Button>
+        </Button> */}
         {singleFile && singleFile.name && (
           <View
             style={{

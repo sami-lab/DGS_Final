@@ -80,12 +80,11 @@ const Details = ({ theme, navigation, route }) => {
   return (
     <>
       <View style={styles.root}>
-        <ScrollView>
-          <MainHeader navigation={navigation} backRoute="index" />
+        <MainHeader navigation={navigation} backRoute="index" />
 
-          {note != null && (
-            <>
-              <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+        {note != null && (
+          <>
+            {/* <View style={{ alignItems: 'center', justifyContent: 'center' }}>
                 {note.image && note.image !== null && (
                   <Image
                     resizeMode="cover"
@@ -96,55 +95,56 @@ const Details = ({ theme, navigation, route }) => {
                     source={{ uri: apiUrl + '/files/' + note.image }}
                   />
                 )}
-              </View>
+              </View> */}
+            <View
+              style={{
+                flex: 1,
+                alignItems: 'center',
+                justifyContent: 'center',
+                margin: 5,
+                paddingHorizontal: 10,
+              }}
+            >
+              <Text style={styles.title}>{note.title}</Text>
+              <View
+                style={{
+                  borderBottomColor: theme.colors.grey,
+                  borderBottomWidth: 1,
+                  marginVertical: 7,
+                  width: '50%',
+                }}
+              />
+              <Text style={styles.text}>{note.description}</Text>
               <View
                 style={{
                   alignItems: 'center',
-                  margin: 5,
-                  paddingHorizontal: 10,
+                  justifyContent: 'center',
+                  marginTop: 20,
                 }}
               >
-                <Text style={styles.title}>{note.title}</Text>
-                <View
+                <TouchableOpacity
+                  color="#fff"
                   style={{
-                    borderBottomColor: theme.colors.grey,
-                    borderBottomWidth: 1,
-                    marginVertical: 7,
-                    width: '50%',
-                  }}
-                />
-                <Text style={styles.text}>{note.description}</Text>
-                <View
-                  style={{
-                    alignItems: 'center',
+                    ...styles.buttonStyles,
+                    display: 'flex',
+                    flexDirection: 'row',
                     justifyContent: 'center',
-                    marginTop: 20,
+                    alignItems: 'center',
                   }}
+                  onPress={() => navigation.navigate('Create', note)}
                 >
-                  <TouchableOpacity
-                    color="#fff"
-                    style={{
-                      ...styles.buttonStyles,
-                      display: 'flex',
-                      flexDirection: 'row',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                    }}
-                    onPress={() => navigation.navigate('Create', note)}
-                  >
-                    <Text style={styles.buttonText}>Update</Text>
-                    <MaterialCommunityIcons
-                      name="circle-edit-outline"
-                      size={22}
-                      color={theme.colors.light}
-                      style={{ marginLeft: 5 }}
-                    />
-                  </TouchableOpacity>
-                </View>
+                  <Text style={styles.buttonText}>Update</Text>
+                  <MaterialCommunityIcons
+                    name="circle-edit-outline"
+                    size={22}
+                    color={theme.colors.light}
+                    style={{ marginLeft: 5 }}
+                  />
+                </TouchableOpacity>
               </View>
-            </>
-          )}
-        </ScrollView>
+            </View>
+          </>
+        )}
       </View>
     </>
   );

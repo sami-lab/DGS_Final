@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   StyleSheet,
   Text,
@@ -9,11 +9,12 @@ import {
   ScrollView,
   Linking,
 } from 'react-native';
+
 import { Card, withTheme, Button } from 'react-native-paper';
 import { WebView } from 'react-native-webview';
 
 import MainHeader from '../../components/mainHeader';
-function Home({ theme, navigation }) {
+function Home({ theme, navigation, route }) {
   const styles = StyleSheet.create({
     root: {
       flex: 1,
@@ -38,17 +39,6 @@ function Home({ theme, navigation }) {
   const [openWebView, setOpenWebView] = useState(false);
   const [webViewUrl, setWebViewUrl] = useState('');
 
-  const Webiew = (url) => {
-    return (
-      <View style={{ width: '100%', height: Dimensions.get('screen').height }}>
-        <WebView
-          javaScriptEnabled={true}
-          downStorageEnabled={true}
-          source={{ uri: url }}
-        />
-      </View>
-    );
-  };
   return (
     <ScrollView style={styles.root}>
       <MainHeader />

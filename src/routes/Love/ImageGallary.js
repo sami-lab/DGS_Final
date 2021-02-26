@@ -1,9 +1,20 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { StyleSheet, Text, View, Dimensions, Image, Alert } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Dimensions,
+  Image,
+  Alert,
+  PermissionsAndroid,
+  TouchableOpacity,
+} from 'react-native';
 import { withTheme, Portal, Modal } from 'react-native-paper';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import RNFetchBlob from 'rn-fetch-blob';
 const fs = RNFetchBlob.fs;
+const config = RNFetchBlob.config;
+
 import Share from 'react-native-share';
 import MainHeader from '../../components/mainChildHeader';
 import Spinner from '../../components/spinner';
@@ -113,6 +124,82 @@ function ImageGallary({ theme, navigation }) {
     convertToBase64(apiUrl + '/files/' + img, option);
   };
 
+  // This opions is for downloading image
+  const checkPermission = async (url) => {
+    // Function to check the platform
+    // If iOS then start downloading
+    // If Android then ask for permission
+
+    if (Platform.OS === 'ios') {
+      downloadImage();
+    } else {
+      try {
+        const granted = await PermissionsAndroid.request(
+          PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+          {
+            title: 'Storage Permission Required',
+            message: 'App needs access to your storage to download Photos',
+          }
+        );
+        if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+          // Once user grant the permission start downloading
+          console.log('Storage Permission Granted.');
+          downloadImage(url);
+        } else {
+          // If permission denied then show alert
+          alert('Storage Permission Not Granted');
+        }
+      } catch (err) {
+        // To handle permission related exception
+        console.warn(err);
+      }
+    }
+  };
+  const downloadImage = (url) => {
+    // Main function to download the image
+    dispatch({ type: actionTypes.SET_LOADING, payload: true });
+    // To add the time suffix in filename
+    let date = new Date();
+    // Image URL which we want to download
+    let image_URL = url;
+    // Getting the extention of the file
+    let ext = getExtention(image_URL);
+    ext = '.' + ext[0];
+    // Get config and fs from RNFetchBlob
+    // config: To pass the downloading related options
+    // fs: Directory path where we want our image to download
+    let PictureDir = fs.dirs.PictureDir;
+    let options = {
+      fileCache: true,
+      addAndroidDownloads: {
+        // Related to the Android only
+        useDownloadManager: true,
+        notification: true,
+        path:
+          PictureDir +
+          '/image_' +
+          Math.floor(date.getTime() + date.getSeconds() / 2) +
+          ext,
+        description: 'Image',
+      },
+    };
+    console.log(options, ext);
+    config(options)
+      .fetch('GET', image_URL)
+      .then((res) => {
+        // Showing alert after successful downloading
+        dispatch({ type: actionTypes.SET_LOADING, payload: false });
+        Alert.alert('Success', 'Image Saved successfully');
+      })
+      .catch((e) =>
+        dispatch({ type: actionTypes.SET_LOADING, payload: false })
+      );
+  };
+
+  const getExtention = (filename) => {
+    // To get the file extension
+    return /[.]/.exec(filename) ? /[^.]+$/.exec(filename) : undefined;
+  };
   //inital data load
   useEffect(() => {
     dispatch({ type: actionTypes.SET_LOADING, payload: true });
@@ -216,7 +303,7 @@ function ImageGallary({ theme, navigation }) {
             onDismiss={() => setModelOpen(false)}
             contentContainerStyle={{
               ...styles.modal,
-              height: selectedImage.masonryDimensions.height + 100,
+              height: selectedImage.masonryDimensions.height + 130,
               padding: 3,
             }}
           >
@@ -231,6 +318,32 @@ function ImageGallary({ theme, navigation }) {
                   height: selectedImage.masonryDimensions.height + 100,
                 }}
               />
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignSelf: 'center',
+                  marginVertical: 10,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  marginBottom: -20,
+                }}
+              >
+                <TouchableOpacity
+                  style={{
+                    width: '80%',
+                    padding: 10,
+                    backgroundColor: theme.colors.darkPink,
+                    borderRadius: 50,
+                  }}
+                  onPress={() => checkPermission(selectedImage.source.uri)}
+                >
+                  <Text
+                    style={{ textAlign: 'center', padding: 5, color: '#fff' }}
+                  >
+                    Download
+                  </Text>
+                </TouchableOpacity>
+              </View>
               {/* <View
                 style={{
                   flexDirection: 'row',

@@ -115,14 +115,30 @@ function Article({ theme, navigation, route }) {
               style={{
                 alignSelf: 'center',
                 backgroundColor: 'transparent',
-                width: Dimensions.get('screen').width * 0.85,
-                height: Dimensions.get('screen').height * 0.5,
+                width: Dimensions.get('window').width * 0.9,
+                height: Dimensions.get('window').height * 0.65,
               }}
+              textZoom={180}
+              contentMode="recommended"
+              mediaPlaybackRequiresUserAction={false}
               startInLoadingState={false}
               scalesPageToFit={true}
               source={{ html: `${article.matter}` }}
               javaScriptEnabled={true}
               domStorageEnabled={true}
+              onError={(syntheticEvent) => {
+                const { nativeEvent } = syntheticEvent;
+                console.warn('WebView error: ', nativeEvent);
+              }}
+              onHttpError={(syntheticEvent) => {
+                const { nativeEvent } = syntheticEvent;
+                console.warn(
+                  'WebView received error status code: ',
+                  nativeEvent.statusCode
+                );
+              }}
+              startInLoadingState={true}
+              renderLoading={() => <Text>Loading content</Text>}
             />
           </View>
         </ScrollView>
