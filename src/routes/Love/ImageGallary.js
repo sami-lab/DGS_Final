@@ -187,7 +187,7 @@ function ImageGallary({ theme, navigation }) {
       .fetch('GET', image_URL)
       .then((res) => {
         // Showing alert after successful downloading
-        Alert.alert('Success', 'Image Saved successfully');
+        setSelectedImage(null);
       })
       .catch((e) => console.log(e.message));
   };

@@ -195,6 +195,7 @@ function Create({ theme, navigation, route }) {
             blurOnSubmit={false}
             onFocus={() => setenableShift(false)}
             onChangeText={(text) => setTitle(text)}
+            maxLength={60}
           />
         </Card>
 

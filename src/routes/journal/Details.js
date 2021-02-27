@@ -36,6 +36,7 @@ const Details = ({ theme, navigation, route }) => {
     },
     title: {
       fontSize: 20,
+      textAlign: 'center',
       marginTop: 10,
       marginBottom: 5,
       fontWeight: 'bold',

@@ -141,7 +141,9 @@ function Journal({ theme, navigation, route }) {
                 fontFamily: theme.fonts.regular.fontFamily,
               }}
             >
-              {item.title}
+              {item.title.length > 20
+                ? `${item.title.slice(0, 20)}...`
+                : item.title}
             </Text>
           </View>
           <View style={{ flexDirection: 'row' }}>
