@@ -157,7 +157,6 @@ function ImageGallary({ theme, navigation }) {
   };
   const downloadImage = (url) => {
     // Main function to download the image
-    dispatch({ type: actionTypes.SET_LOADING, payload: true });
     // To add the time suffix in filename
     let date = new Date();
     // Image URL which we want to download
@@ -188,12 +187,9 @@ function ImageGallary({ theme, navigation }) {
       .fetch('GET', image_URL)
       .then((res) => {
         // Showing alert after successful downloading
-        dispatch({ type: actionTypes.SET_LOADING, payload: false });
         Alert.alert('Success', 'Image Saved successfully');
       })
-      .catch((e) =>
-        dispatch({ type: actionTypes.SET_LOADING, payload: false })
-      );
+      .catch((e) => console.log(e.message));
   };
 
   const getExtention = (filename) => {
@@ -212,6 +208,7 @@ function ImageGallary({ theme, navigation }) {
       })
       .then(({ data: response }) => {
         dispatch({ type: actionTypes.SET_LOADING, payload: false });
+
         setTotalRecords(response.total);
         setImages(response.data.doc);
         setError(false);
@@ -303,7 +300,7 @@ function ImageGallary({ theme, navigation }) {
             onDismiss={() => setModelOpen(false)}
             contentContainerStyle={{
               ...styles.modal,
-              height: selectedImage.masonryDimensions.height + 140,
+              height: selectedImage.masonryDimensions.height + 150,
               padding: 3,
             }}
           >

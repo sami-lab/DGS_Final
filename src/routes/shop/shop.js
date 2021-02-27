@@ -31,6 +31,8 @@ function Shop({ theme, navigation, route }) {
       borderRadius: 5,
       paddingVertical: 10,
       margin: 5,
+      width: Dimensions.get('window').width * 0.88,
+      alignSelf: 'center',
     },
 
     text: {
@@ -96,6 +98,7 @@ function Shop({ theme, navigation, route }) {
                     borderRadius: 4,
                     width: Dimensions.get('window').width * 0.8,
                     height: 130,
+                    marginBottom: 4,
                   }}
                 />
 

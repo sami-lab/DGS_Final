@@ -141,7 +141,7 @@ function Create({ theme, navigation, route }) {
       })
       .then(({ data: response }) => {
         dispatch({ type: actionTypes.SET_LOADING, payload: false });
-        navigation.navigate('index');
+        navigation.navigate('List');
       })
       .catch((error) => {
         dispatch({ type: actionTypes.SET_LOADING, payload: false });
@@ -168,7 +168,7 @@ function Create({ theme, navigation, route }) {
       })
       .then(({ data: response }) => {
         dispatch({ type: actionTypes.SET_LOADING, payload: false });
-        navigation.navigate('index');
+        navigation.navigate('List');
       })
       .catch((error) => {
         dispatch({ type: actionTypes.SET_LOADING, payload: false });
@@ -182,7 +182,7 @@ function Create({ theme, navigation, route }) {
     <View style={styles.root}>
       <KeyboardAvoidingView behavior="position" enabled={enableshift}>
         <Spinner visible={state.loading} />
-        <MainHeader navigation={navigation} backRoute="index" />
+        <MainHeader navigation={navigation} backRoute="List" />
         <Text style={styles.title}>
           {route.params ? 'Update Journal' : 'Journal Your Thoughts'}
         </Text>

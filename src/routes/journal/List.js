@@ -63,9 +63,7 @@ function Journal({ theme, navigation, route }) {
   const [error, setError] = useState(false);
   const [pageLoaded, setPageLoaded] = useState(false);
 
-  const fetchShops = () => {
-    dispatch({ type: actionTypes.SET_LOADING, payload: true });
-    setPageLoaded(true);
+  const fetchNotes = () => {
     axios
       .get(`/journal/`, {
         headers: {
@@ -75,11 +73,11 @@ function Journal({ theme, navigation, route }) {
       .then(({ data: response }) => {
         //save token and user in async storage
         setJournals(response.data.doc);
-        dispatch({ type: actionTypes.SET_LOADING, payload: false });
+        setPageLoaded(true);
       })
       .catch((error) => {
-        dispatch({ type: actionTypes.SET_LOADING, payload: false });
         setError(true);
+        setPageLoaded(false);
         Alert.alert(
           'Fail To fetch data',
           error.response ? error.response.data.message : error.message
@@ -95,7 +93,7 @@ function Journal({ theme, navigation, route }) {
         },
       })
       .then((deletedEmp) => {
-        Alert.alert(`Recorded deleted sucessfully`);
+        Alert.alert(`Note deleted sucessfully`);
         setJournals(journals.filter((i) => i._id !== id));
       })
       .catch((err) => {
@@ -104,7 +102,7 @@ function Journal({ theme, navigation, route }) {
   };
   useFocusEffect(
     React.useCallback(() => {
-      fetchShops();
+      fetchNotes();
     }, [])
   );
 
@@ -183,7 +181,7 @@ function Journal({ theme, navigation, route }) {
   };
   return (
     <View style={styles.root}>
-      <MainHeader navigation={navigation} backRoute="Home" />
+      <MainHeader navigation={navigation} backRoute="index" />
 
       {journals.length > 0 ? (
         <FlatList
@@ -192,7 +190,7 @@ function Journal({ theme, navigation, route }) {
             return renderList(item);
           }}
           keyExtractor={(item) => item._id}
-          onRefresh={() => fetchShops()}
+          onRefresh={() => fetchNotes()}
           refreshing={state.loading}
         />
       ) : (!state.loading && pageLoaded) || error ? (

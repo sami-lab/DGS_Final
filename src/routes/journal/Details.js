@@ -80,7 +80,7 @@ const Details = ({ theme, navigation, route }) => {
   return (
     <>
       <View style={styles.root}>
-        <MainHeader navigation={navigation} backRoute="index" />
+        <MainHeader navigation={navigation} backRoute="List" />
 
         {note != null && (
           <>

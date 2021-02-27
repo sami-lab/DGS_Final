@@ -29,6 +29,8 @@ function Book({ theme, navigation, route }) {
       flexDirection: 'row',
       backgroundColor: 'white',
       borderRadius: 5,
+      width: Dimensions.get('window').width * 0.88,
+      alignSelf: 'center',
       paddingVertical: 10,
       margin: 5,
     },
@@ -95,6 +97,7 @@ function Book({ theme, navigation, route }) {
                     borderRadius: 4,
                     width: Dimensions.get('window').width * 0.8,
                     height: 130,
+                    marginBottom: 3,
                   }}
                 />
 
