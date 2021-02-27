@@ -65,8 +65,8 @@ function TabScreen(props) {
       })}
       tabBarOptions={{
         tabStyle: {
-          borderTopLeftRadius: 40,
-          borderTopRightRadius: 40,
+          ///borderTopLeftRadius: 40,
+          //borderTopRightRadius: 40,
           //borderRadius: 40,
           backgroundColor: theme.colors.light,
         },
@@ -77,7 +77,7 @@ function TabScreen(props) {
           backgroundColor: 'transparent',
           borderTopColor: 'transparent',
           elevation: 0,
-          position: 'absolute',
+          //position: 'absolute',
           //left: '37%',
           //bottom: 5,
           width: '100%',

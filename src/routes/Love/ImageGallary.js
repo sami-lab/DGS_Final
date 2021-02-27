@@ -303,7 +303,7 @@ function ImageGallary({ theme, navigation }) {
             onDismiss={() => setModelOpen(false)}
             contentContainerStyle={{
               ...styles.modal,
-              height: selectedImage.masonryDimensions.height + 130,
+              height: selectedImage.masonryDimensions.height + 140,
               padding: 3,
             }}
           >
@@ -325,13 +325,13 @@ function ImageGallary({ theme, navigation }) {
                   marginVertical: 10,
                   alignItems: 'center',
                   justifyContent: 'center',
-                  marginBottom: -20,
+                  marginBottom: 10,
                 }}
               >
                 <TouchableOpacity
                   style={{
-                    width: '80%',
-                    padding: 10,
+                    width: '70%',
+                    padding: 5,
                     backgroundColor: theme.colors.darkPink,
                     borderRadius: 50,
                   }}
