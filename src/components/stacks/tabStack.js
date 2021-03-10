@@ -12,6 +12,7 @@ import Love from '../../components/stacks/loveStack';
 import ShopStack from '../../components/stacks/shopStack';
 import BookStack from '../../components/stacks/bookStack';
 import JournalStack from '../../components/stacks/journalStack';
+import UsersProfileStack from '../../components/stacks/usersProfileStack';
 
 import { withTheme } from 'react-native-paper';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -38,6 +39,7 @@ function TabScreen(props) {
           'Connect',
           'Breathe',
           'Love',
+          'Profile',
         ].includes(route.name)
           ? () => {
               return null;
@@ -238,6 +240,7 @@ function TabScreen(props) {
       <Tab.Screen name="Shop" component={ShopStack} />
       <Tab.Screen name="Books" component={BookStack} />
       <Tab.Screen name="Journal" component={JournalStack} />
+      <Tab.Screen name="Profile" component={UsersProfileStack} />
 
       <Tab.Screen name="Home" component={Home} />
     </Tab.Navigator>

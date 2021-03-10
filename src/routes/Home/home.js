@@ -10,7 +10,7 @@ import {
   Linking,
 } from 'react-native';
 
-import { Card, withTheme, Button } from 'react-native-paper';
+import { Card, withTheme, FAB } from 'react-native-paper';
 import { WebView } from 'react-native-webview';
 
 import MainHeader from '../../components/mainHeader';
@@ -35,22 +35,25 @@ function Home({ theme, navigation, route }) {
       fontFamily: theme.fonts.bold.fontFamily,
       textAlign: 'center',
     },
+    fab: {
+      position: 'absolute',
+      right: 15,
+      bottom: 15,
+    },
   });
-  const [openWebView, setOpenWebView] = useState(false);
-  const [webViewUrl, setWebViewUrl] = useState('');
 
   return (
-    <ScrollView style={styles.root}>
+    <View style={styles.root}>
       <MainHeader />
-      <View
-        style={{
-          width: Dimensions.get('window').width * 0.9,
-          alignSelf: 'center',
-          marginVertical: 10,
+      <ScrollView
+        contentContainerStyle={{
           justifyContent: 'center',
           flex: 1,
           flexDirection: 'row',
           flexWrap: 'wrap',
+          width: Dimensions.get('window').width * 0.9,
+          alignSelf: 'center',
+          marginVertical: 10,
         }}
       >
         <TouchableOpacity
@@ -217,8 +220,14 @@ function Home({ theme, navigation, route }) {
             }}
           />
         </TouchableOpacity>
-      </View>
-
+      </ScrollView>
+      <FAB
+        onPress={() => navigation.navigate('Profile')}
+        style={styles.fab}
+        small
+        icon="account-settings"
+        theme={{ colors: { accent: theme.colors.darkPink } }}
+      />
       {/* <Image
         resizeMode="contain"
         source={require('../../assets/dev/logo.png')}
@@ -229,7 +238,7 @@ function Home({ theme, navigation, route }) {
           height: Dimensions.get('window').height * 0.3,
         }}
       /> */}
-    </ScrollView>
+    </View>
   );
 }
 

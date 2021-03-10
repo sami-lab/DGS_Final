@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, { useContext } from 'react';
 import {
   StyleSheet,
   Dimensions,
@@ -7,22 +7,21 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {useTheme, Avatar} from 'react-native-paper';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import { useTheme, Avatar } from 'react-native-paper';
 import AsyncStorage from '@react-native-community/async-storage';
 
-import {GlobalContext} from '../context/GlobalContext';
+import { GlobalContext } from '../context/GlobalContext';
 import * as actionTypes from '../context/actions';
 //import Orientation from 'react-native-orientation';
 
 export default function MainHeader() {
   const theme = useTheme();
-  const {dispatch} = useContext(GlobalContext);
+  const { dispatch } = useContext(GlobalContext);
   const signOut = async () => {
     try {
       await AsyncStorage.removeItem('userToken');
       await AsyncStorage.removeItem('user');
-      dispatch({type: actionTypes.LOGOUT});
+      dispatch({ type: actionTypes.LOGOUT });
     } catch (e) {
       Alert.alert('someting went wrong');
     }
@@ -39,7 +38,8 @@ export default function MainHeader() {
         width: Dimensions.get('screen').width,
         height: Dimensions.get('screen').height * 0.15,
         justifyContent: 'center',
-      }}>
+      }}
+    >
       {/* <TouchableOpacity
         onPress={signOut}
         style={{alignSelf: 'flex-end', marginTop: 75, marginRight: 20}}>
