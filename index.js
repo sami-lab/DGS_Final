@@ -121,7 +121,7 @@ function Root() {
 }
 function Main() {
   const { state } = useContext(GlobalContext);
-  console.log('Current State from index', state);
+  //console.log('Current State from index', state);
   const theme = state.isDarkTheme ? CustomDarkTheme : CustomDefaultTheme;
 
   return (

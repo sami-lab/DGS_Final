@@ -72,6 +72,7 @@ const Profile = ({ theme, navigation }) => {
             authorization: 'Bearer ' + state.userToken,
           },
         });
+        console.log(res.data.data.user);
         setUser(res.data.data.user);
         dispatch({ type: actionTypes.SET_LOADING, payload: false });
       } catch (err) {
@@ -92,7 +93,7 @@ const Profile = ({ theme, navigation }) => {
     // }
     //choose route for delete me
     axios
-      .delete(`/users/me`, {
+      .delete(`/users/deleteMe`, {
         headers: {
           authorization: 'Bearer ' + state.userToken,
         },
@@ -107,6 +108,7 @@ const Profile = ({ theme, navigation }) => {
         }
       })
       .catch((err) => {
+        console.log(err);
         Alert.alert('Opps! Someting went wrong');
       });
   };
@@ -227,7 +229,7 @@ const Profile = ({ theme, navigation }) => {
         style={styles.fab}
         small={false}
         icon="delete"
-        theme={{ colors: { accent: theme.colors.darkPink } }}
+        theme={{ colors: { accent: 'red' } }}
       />
       {/* <FloatingButton
         style={{ bottom: 5, zIndex: 1000 }}
