@@ -8,7 +8,9 @@ import {
   Alert,
   PermissionsAndroid,
   TouchableOpacity,
+  Platform,
 } from 'react-native';
+import CameraRoll from "@react-native-community/cameraroll";
 import { withTheme, Portal, Modal } from 'react-native-paper';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import RNFetchBlob from 'rn-fetch-blob';
@@ -131,7 +133,7 @@ function ImageGallary({ theme, navigation }) {
     // If Android then ask for permission
 
     if (Platform.OS === 'ios') {
-      downloadImage();
+      downloadImage(url);
     } else {
       try {
         const granted = await PermissionsAndroid.request(
@@ -167,30 +169,35 @@ function ImageGallary({ theme, navigation }) {
     // Get config and fs from RNFetchBlob
     // config: To pass the downloading related options
     // fs: Directory path where we want our image to download
-    let PictureDir = fs.dirs.PictureDir;
-    let options = {
-      fileCache: true,
-      addAndroidDownloads: {
-        // Related to the Android only
-        useDownloadManager: true,
-        notification: true,
-        path:
-          PictureDir +
-          '/image_' +
-          Math.floor(date.getTime() + date.getSeconds() / 2) +
-          ext,
-        description: 'Image',
-      },
-    };
-    console.log(options, ext);
-    config(options)
-      .fetch('GET', image_URL)
-      .then((res) => {
-        // Showing alert after successful downloading
-        setSelectedImage(null);
-      })
-      .catch((e) => console.log(e.message));
-  };
+    if(Platform.OS === "ios") {
+      CameraRoll.save(url, 'photo')
+      .then(Alert.alert('Success', 'Photo added to camera roll!'))
+    } else {
+      let PictureDir = fs.dirs.DocumentDir;
+      let options = {
+        fileCache: true,
+        addAndroidDownloads: {
+          // Related to the Android only
+          useDownloadManager: true,
+          notification: true,
+          path:
+            PictureDir +
+            '/image_' +
+            Math.floor(date.getTime() + date.getSeconds() / 2) +
+            ext,
+          description: 'Image',
+        },
+      };
+      console.log(options, ext);
+      config(options)
+        .fetch('GET', image_URL)
+        .then((res) => {
+          // Showing alert after successful downloading
+          setSelectedImage(null);
+        })
+        .catch((e) => console.log(e.message));
+      }
+    }
 
   const getExtention = (filename) => {
     // To get the file extension

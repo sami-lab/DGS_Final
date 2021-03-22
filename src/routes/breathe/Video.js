@@ -8,6 +8,7 @@ import {
   ScrollView,
   Image,
   Platform,
+  SafeAreaView,
   StatusBar,
   ActivityIndicator,
 } from 'react-native';
@@ -27,7 +28,8 @@ import ScreenOrientation, {
 //   HideNavigationBar,
 //   ShowNavigationBar,
 // } from 'react-native-navigation-bar-color';
-
+const deviceHeight =  Dimensions.get('window').height
+const deviceWidth =  Dimensions.get('window').width
 function VideoPlayer({ navigation, theme, route }) {
   const styles = StyleSheet.create({
     root: {
@@ -393,7 +395,7 @@ function VideoPlayer({ navigation, theme, route }) {
           ) : (
               <>
                 <TouchableOpacity
-                  style={{ position: 'absolute', top: 15, left: 25, zIndex: 30 }}
+                  style={{ position: 'absolute', top: 45, left: 25, zIndex: 30}}
                   onPress={() => navigation.goBack()}>
                   <Image
                     resizeMode="stretch"
@@ -405,7 +407,7 @@ function VideoPlayer({ navigation, theme, route }) {
                   />
                 </TouchableOpacity>
                 <TouchableOpacity
-                  style={{ position: 'absolute', top: 250, right: 15, zIndex: 30 }}
+                  style={{ position: 'absolute', top: deviceHeight/ 3, right: deviceWidth/20, zIndex: 30 }}
                   onPress={() =>
                     setVideoState((v) => {
                       return { ...v, fullScreen: true, controls: true };
@@ -413,7 +415,7 @@ function VideoPlayer({ navigation, theme, route }) {
                   }>
                   <MaterialCommunityIcons
                     name="fullscreen"
-                    size={40}
+                    size={deviceHeight/18}
                     color="black"
                   />
                 </TouchableOpacity>
@@ -439,7 +441,7 @@ function VideoPlayer({ navigation, theme, route }) {
           ) : null}
           <Video
             ref={player}
-            source={{ uri: apiUrl + '/files/' + data.video }}
+            source={{ uri: apiUrl + '/files/' + data.video.replace(/ /g, "%20") }}
             style={{
               width: '100%',
               height: '100%',
@@ -449,8 +451,9 @@ function VideoPlayer({ navigation, theme, route }) {
             volume={videoState.volume}
             muted={videoState.muted}
             controls={videoState.controls}
-            fullscreen={videoState.fullScreen}
+            fullscreen={Platform.OS === "ios" ? true : videoState.fullScreen}
             fullscreenAutorotate={true}
+            fullscreenOrientation={"landscape"}
             ignoreSilentSwitch={videoState.ignoreSilentSwitch}
             resizeMode={videoState.resizeMode}
             onLoad={onLoad}

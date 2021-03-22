@@ -7,6 +7,8 @@ import {
   KeyboardAvoidingView,
   TextInput,
   Text,
+  Keyboard,
+  TouchableWithoutFeedback ,
   ImageBackground,
   Dimensions,
   SafeAreaView,
@@ -498,6 +500,7 @@ function Register({ theme, navigation }) {
           <Card elevation={2} style={styles.inputCard}>
             <TextInput
               placeholder="Full name"
+              placeholderTextColor="#C7C7CD"
               style={styles.inputStyle}
               value={name}
               onSubmitEditing={() => usernameRef.current.focus()}
@@ -508,6 +511,7 @@ function Register({ theme, navigation }) {
           </Card>
           <Card style={styles.inputCard}>
             <TextInput
+              placeholderTextColor="#C7C7CD"
               placeholder="Username"
               ref={usernameRef}
               style={styles.inputStyle}
@@ -591,6 +595,7 @@ function Register({ theme, navigation }) {
             <TextInput
               placeholder="Email"
               style={styles.inputStyle}
+              placeholderTextColor="#C7C7CD"
               value={email}
               onSubmitEditing={() => passwordRef.current.focus()}
               blurOnSubmit={false}
@@ -601,6 +606,7 @@ function Register({ theme, navigation }) {
           <Card style={styles.inputCard}>
             <TextInput
               placeholder="Password"
+              placeholderTextColor="#C7C7CD"
               style={styles.inputStyle}
               value={password}
               ref={passwordRef}
@@ -613,6 +619,7 @@ function Register({ theme, navigation }) {
           </Card>
           <Card style={styles.inputCard}>
             <TextInput
+              placeholderTextColor="#C7C7CD"
               placeholder="Confirm Password"
               style={styles.inputStyle}
               ref={confirmPasswordRef}
@@ -1387,14 +1394,17 @@ function Register({ theme, navigation }) {
   );
 
   return (
-    <View style={styles.root}>
-      {step === 1 ? firstSection : null}
-      {step === 2 ? secondSection : null}
-      {step === 3 ? thirdSection : null}
-      {step == 4 ? fourthSection : null}
-      {step == 5 ? fifthSection : null}
-      {step == 6 ? sixSection : null}
-    </View>
+    <TouchableWithoutFeedback 
+onPress={() => Keyboard.dismiss()}>
+      <View style={styles.root}>
+        {step === 1 ? firstSection : null}
+        {step === 2 ? secondSection : null}
+        {step === 3 ? thirdSection : null}
+        {step == 4 ? fourthSection : null}
+        {step == 5 ? fifthSection : null}
+        {step == 6 ? sixSection : null}
+      </View>
+    </TouchableWithoutFeedback>
   );
 }
 export default withTheme(Register);

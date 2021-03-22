@@ -6,6 +6,8 @@ import {
   Text,
   KeyboardAvoidingView,
   TextInput,
+  Keyboard,
+  TouchableWithoutFeedback ,
   Alert,
   TouchableOpacity,
 } from 'react-native';
@@ -41,6 +43,7 @@ function Questions({ theme, navigation }) {
     inputStyle: {
       paddingHorizontal: 20,
       borderRadius: 40,
+      height:40
     },
     buttonStyles: {
       display: 'flex',
@@ -153,6 +156,8 @@ function Questions({ theme, navigation }) {
   };
 
   return (
+    <TouchableWithoutFeedback 
+onPress={() => Keyboard.dismiss()}>
     <View style={styles.root}>
       <KeyboardAvoidingView behavior="position" enabled={enableshift}>
         <Spinner visible={state.loading} />
@@ -160,6 +165,7 @@ function Questions({ theme, navigation }) {
         <Text style={styles.title}>Ask a question</Text>
         <Card elevation={1} style={styles.inputCard}>
           <TextInput
+            placeholderTextColor="#C7C7CD"
             placeholder="Subject"
             style={styles.inputStyle}
             value={subject}
@@ -180,6 +186,7 @@ function Questions({ theme, navigation }) {
           }}
         >
           <TextInput
+            placeholderTextColor="#C7C7CD"
             placeholder="Text"
             multiline
             numberOfLines={10}
@@ -275,6 +282,7 @@ function Questions({ theme, navigation }) {
         </TouchableOpacity>
       </View>
     </View>
+    </TouchableWithoutFeedback>
   );
 }
 

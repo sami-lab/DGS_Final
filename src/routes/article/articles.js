@@ -5,6 +5,8 @@ import {
   View,
   Dimensions,
   TouchableOpacity,
+  Keyboard,
+  TouchableWithoutFeedback,
   Image,
   Alert,
   TextInput,
@@ -62,9 +64,11 @@ function Articles({ theme, navigation }) {
     },
     inputStyle: {
       borderRadius: 40,
+      height:45
+
     },
     input1: {
-      paddingLeft: 50,
+      paddingLeft: 40,
     },
 
     title: {
@@ -334,34 +338,39 @@ function Articles({ theme, navigation }) {
               style={{ flexDirection: 'row', justifyContent: 'space-between' }}
             >
               <TextInput
+                placeholderTextColor="#C7C7CD"
                 style={{
                   color: 'black',
                   fontFamily: theme.fonts.regular.fontFamily,
                   fontSize: 16,
                   paddingLeft: 30,
+                  height:45
                 }}
                 editable={false}
                 placeholder="Select Category"
                 value={selectedCategoryValue}
               />
-              <MaterialIcons
-                name="keyboard-arrow-down"
-                size={36}
-                color={theme.colors.light}
-                style={{
-                  marginHorizontal: 5,
+              <View  style={{
+                  marginHorizontal:5,
                   alignSelf: 'center',
                   borderRadius: 50,
                   backgroundColor: theme.colors.darkPink,
-                }}
-              />
+                }}>
+                <MaterialIcons
+                  name="keyboard-arrow-down"
+                  size={36}
+                  color={theme.colors.light}
+                
+                />
+                </View>
             </View>
           </ModalSelector>
         </Card>
 
         <Card elevation={1} style={{ ...styles.inputCard }}>
-          <MaterialIcons name="search" size={32} style={styles.icon} />
+          <MaterialIcons name="search" size={28} style={styles.icon} />
           <TextInput
+            placeholderTextColor="#C7C7CD"
             placeholder="Search"
             style={{ ...styles.inputStyle, ...styles.input1 }}
             value={search}
@@ -391,6 +400,8 @@ function Articles({ theme, navigation }) {
               '/' +
               d.getFullYear();
             return (
+              <TouchableWithoutFeedback 
+onPress={() => Keyboard.dismiss()}>
               <TouchableOpacity
                 key={item._id}
                 style={styles.articleCard}
@@ -426,6 +437,7 @@ function Articles({ theme, navigation }) {
                   </Card.Content>
                 </View>
               </TouchableOpacity>
+              </TouchableWithoutFeedback>
             );
           }}
           onEndReached={() => {

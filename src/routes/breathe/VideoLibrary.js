@@ -7,6 +7,8 @@ import {
   TouchableOpacity,
   Image,
   FlatList,
+  Keyboard,
+  TouchableWithoutFeedback,
   Alert,
   TextInput,
 } from 'react-native';
@@ -63,6 +65,7 @@ function VideoLibrary({ theme, navigation }) {
     },
     inputStyle: {
       borderRadius: 40,
+      height:45
     },
     input1: {
       paddingLeft: 50,
@@ -274,6 +277,8 @@ function VideoLibrary({ theme, navigation }) {
     }
   }, [scroll]);
   return (
+    <TouchableWithoutFeedback 
+onPress={() => Keyboard.dismiss()}>
     <View style={styles.root}>
       <MainHeader navigation={navigation} backRoute="Breathe" />
       <Spinner visible={state.loading} />
@@ -292,7 +297,7 @@ function VideoLibrary({ theme, navigation }) {
             })}
             initValue="Select Category!"
             selectStyle={{
-              height: 50,
+              // height:45  ,
               justifyContent: 'center',
               alignItems: 'flex-start',
               paddingLeft: 30,
@@ -319,33 +324,39 @@ function VideoLibrary({ theme, navigation }) {
               style={{ flexDirection: 'row', justifyContent: 'space-between' }}
             >
               <TextInput
+                placeholderTextColor="#C7C7CD"
                 style={{
                   color: 'black',
                   fontFamily: theme.fonts.regular.fontFamily,
                   fontSize: 16,
                   paddingLeft: 30,
+                  height:45
                 }}
                 editable={false}
                 placeholder="Select Category"
                 value={selectedCategoryValue}
               />
-              <MaterialIcons
-                name="keyboard-arrow-down"
-                size={36}
-                color={theme.colors.light}
-                style={{
-                  marginHorizontal: 5,
-                  alignSelf: 'center',
-                  borderRadius: 50,
-                  backgroundColor: theme.colors.darkPink,
-                }}
-              />
+              <View  style={{
+                    marginHorizontal: 5,
+                    alignSelf: 'center',
+                    backgroundColor: theme.colors.darkPink,
+                    borderRadius:50
+                  }}
+                >
+                <MaterialIcons
+                  name="keyboard-arrow-down"
+                  size={32}
+                  color={theme.colors.light}
+                 
+                />
+              </View>
             </View>
           </ModalSelector>
         </Card>
         <Card elevation={1} style={{ ...styles.inputCard }}>
           <MaterialIcons name="search" size={32} style={styles.icon} />
           <TextInput
+            placeholderTextColor="#C7C7CD"
             placeholder="Search"
             style={{ ...styles.inputStyle, ...styles.input1 }}
             value={search}
@@ -404,6 +415,7 @@ function VideoLibrary({ theme, navigation }) {
         </View>
       ) : null}
     </View>
+    </TouchableWithoutFeedback>
   );
 }
 

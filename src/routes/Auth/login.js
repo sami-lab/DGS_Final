@@ -8,6 +8,8 @@ import {
   TextInput,
   KeyboardAvoidingView,
   Image,
+  Keyboard,
+  TouchableWithoutFeedback,
   Dimensions,
   SafeAreaView,
   Platform
@@ -116,6 +118,8 @@ function Login({ theme, navigation }) {
     return username != null && password.length > 4;
   };
   return (
+    <TouchableWithoutFeedback 
+onPress={() => Keyboard.dismiss()}>
     <View style={styles.root}>
       <Spinner visible={state.loading} />
       <View>
@@ -143,6 +147,7 @@ function Login({ theme, navigation }) {
         <Card style={styles.inputCard}>
           <TextInput
             placeholder="Username"
+            placeholderTextColor="#C7C7CD"
             style={styles.inputStyle}
             value={username}
             onSubmitEditing={() => passwordRef.current.focus()}
@@ -154,6 +159,7 @@ function Login({ theme, navigation }) {
         <Card style={styles.inputCard}>
           <TextInput
             placeholder="Password"
+            placeholderTextColor="#C7C7CD"
             style={styles.inputStyle}
             value={password}
             secureTextEntry={true}
@@ -207,6 +213,7 @@ function Login({ theme, navigation }) {
         />
       </View>
     </View>
+    </TouchableWithoutFeedback>
   );
 }
 export default withTheme(Login);
