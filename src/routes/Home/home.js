@@ -150,6 +150,9 @@ function Home({ theme, navigation, route }) {
           onPress={() => {
             navigation.navigate('Shop');
           }}
+          onPress={() => {
+            Linking.openURL('https://www.etsy.com/shop/DivorcedGirlSmiling');
+          }}
         >
           <Image
             source={require('../../assets/dev/DivorcedGirlDiscounts.png')}

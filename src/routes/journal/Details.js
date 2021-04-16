@@ -115,7 +115,9 @@ const Details = ({ theme, navigation, route }) => {
                   width: '50%',
                 }}
               />
-              <Text style={styles.text}>{note.description}</Text>
+              <ScrollView>
+                <Text style={styles.text}>{note.description}</Text>
+              </ScrollView>
               <View
                 style={{
                   alignItems: 'center',
