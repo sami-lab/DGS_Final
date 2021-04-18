@@ -148,17 +148,15 @@ function Home({ theme, navigation, route }) {
         <TouchableOpacity
           style={styles.imageCard}
           onPress={() => {
-            navigation.navigate('Shop');
-          }}
-          onPress={() => {
             Linking.openURL('https://www.etsy.com/shop/DivorcedGirlSmiling');
           }}
         >
           <Image
             source={require('../../assets/dev/DivorcedGirlDiscounts.png')}
+            resizeMode="stretch"
             style={{
               borderRadius: 2,
-              width: 90,
+              width: 75,
               height: 90,
             }}
           />

@@ -12,7 +12,7 @@ import {
   TouchableWithoutFeedback,
   Dimensions,
   SafeAreaView,
-  Platform
+  Platform,
 } from 'react-native';
 import { Card, Button, Title, withTheme } from 'react-native-paper';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -96,7 +96,7 @@ function Login({ theme, navigation }) {
           (e) => {
             dispatch({ type: actionTypes.SET_LOADING, payload: false });
             Alert.alert('someting went wrong' + e.message);
-          },
+          }
         );
 
         dispatch({
@@ -110,7 +110,7 @@ function Login({ theme, navigation }) {
         dispatch({ type: actionTypes.SET_LOADING, payload: false });
         Alert.alert(
           'Fail',
-          error.response ? error.response.data.message : error.message,
+          error.response ? error.response.data.message : error.message
         );
       });
   };
@@ -118,101 +118,108 @@ function Login({ theme, navigation }) {
     return username != null && password.length > 4;
   };
   return (
-    <TouchableWithoutFeedback 
-onPress={() => Keyboard.dismiss()}>
-    <View style={styles.root}>
-      <Spinner visible={state.loading} />
-      <View>
-        <Image
-          resizeMode="stretch"
-          source={require('../../assets/dev/loginTopCurve.png')}
-          style={{
-            width: Dimensions.get('screen').width,
-            height: Platform.OS === 'android' ? Dimensions.get('screen').height * 0.2 : Dimensions.get('screen').height * 0.28,
-          }}
-        />
-      </View>
-      <KeyboardAvoidingView
-        behavior="position"
-        enabled={enableshift}
-        style={{
-          alignSelf: 'center',
-          justifyContent: 'center',
-          width: Dimensions.get('screen').width,
-          height: Dimensions.get('screen').height * 0.53,
-        }}>
-        <Card.Content>
-          <Title style={styles.title}>Welcome</Title>
-        </Card.Content>
-        <Card style={styles.inputCard}>
-          <TextInput
-            placeholder="Username"
-            placeholderTextColor="#C7C7CD"
-            style={styles.inputStyle}
-            value={username}
-            onSubmitEditing={() => passwordRef.current.focus()}
-            blurOnSubmit={false}
-            onFocus={() => setenableShift(false)}
-            onChangeText={(text) => setUsername(text)}
+    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+      <View style={styles.root}>
+        <Spinner visible={state.loading} />
+        <View>
+          <Image
+            resizeMode="stretch"
+            source={require('../../assets/dev/loginTopCurve.png')}
+            style={{
+              width: Dimensions.get('screen').width,
+              height:
+                Platform.OS === 'android'
+                  ? Dimensions.get('screen').height * 0.2
+                  : Dimensions.get('screen').height * 0.28,
+            }}
           />
-        </Card>
-        <Card style={styles.inputCard}>
-          <TextInput
-            placeholder="Password"
-            placeholderTextColor="#C7C7CD"
-            style={styles.inputStyle}
-            value={password}
-            secureTextEntry={true}
-            ref={passwordRef}
-            onFocus={() => setenableShift(true)}
-            onChangeText={(text) => setPassword(text)}
-          />
-        </Card>
-        <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-          <Text
-            style={styles.text}
-            onPress={() => navigation.navigate('ForgetPassword')}>
-            Forget Your Password?
-          </Text>
-          <Button
-            color="#fff"
-            disabled={state.loading || !validateinput()}
-            style={styles.buttonStyles}
-            onPress={() => submitData()}>
-            <Text style={styles.buttonText}> Log In</Text>{' '}
-          </Button>
-          <Text style={styles.text}>Don't have an account?</Text>
-          <Text style={styles.text}>
-            Register by answering{' '}
-            <Text style={{ fontWeight: 'bold' }}> 6 quick questions </Text>
-          </Text>
-          <Button
-            color="#fff"
-            disabled={state.loading}
-            style={styles.buttonStyles}
-            onPress={() => navigation.navigate('Register')}>
-            <Text style={styles.buttonText}> Sign Up</Text>{' '}
-          </Button>
         </View>
-      </KeyboardAvoidingView>
-
-      <View
-        style={{
-          display: 'flex',
-          justifyContent: 'flex-end',
-          padding: 0,
-          margin: 0,
-        }}>
-        <Image
-          resizeMode="stretch"
-          source={require('../../assets/dev/loginBottomCurve.png')}
+        <KeyboardAvoidingView
+          behavior="position"
+          enabled={enableshift}
           style={{
+            alignSelf: 'center',
+            justifyContent: 'center',
             width: Dimensions.get('screen').width,
-            height: Dimensions.get('screen').height * 0.2,
+            height: Dimensions.get('screen').height * 0.53,
           }}
-        />
+        >
+          <Card.Content>
+            <Title style={styles.title}>Welcome</Title>
+          </Card.Content>
+          <Card style={styles.inputCard}>
+            <TextInput
+              placeholder="Username"
+              placeholderTextColor="#C7C7CD"
+              style={styles.inputStyle}
+              value={username}
+              onSubmitEditing={() => passwordRef.current.focus()}
+              blurOnSubmit={false}
+              onFocus={() => setenableShift(false)}
+              onChangeText={(text) => setUsername(text)}
+            />
+          </Card>
+          <Card style={styles.inputCard}>
+            <TextInput
+              placeholder="Password"
+              placeholderTextColor="#C7C7CD"
+              style={styles.inputStyle}
+              value={password}
+              secureTextEntry={true}
+              ref={passwordRef}
+              onFocus={() => setenableShift(true)}
+              onChangeText={(text) => setPassword(text)}
+            />
+          </Card>
+          <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+            <Text
+              style={styles.text}
+              onPress={() => navigation.navigate('ForgetPassword')}
+            >
+              Forget Your Password?
+            </Text>
+            <Button
+              color="#fff"
+              disabled={state.loading || !validateinput()}
+              style={styles.buttonStyles}
+              onPress={() => submitData()}
+            >
+              <Text style={styles.buttonText}> Log In</Text>{' '}
+            </Button>
+            <Text style={styles.text}>Don't have an account?</Text>
+            <Text style={styles.text}>
+              Register by answering{' '}
+              <Text style={{ fontWeight: 'bold' }}> 6 quick questions </Text>
+            </Text>
+            <Button
+              color="#fff"
+              disabled={state.loading}
+              style={styles.buttonStyles}
+              onPress={() => navigation.navigate('Register')}
+            >
+              <Text style={styles.buttonText}> Sign Up</Text>{' '}
+            </Button>
+          </View>
+        </KeyboardAvoidingView>
+
+        <View
+          style={{
+            display: 'flex',
+            justifyContent: 'flex-end',
+            padding: 0,
+            margin: 0,
+          }}
+        >
+          <Image
+            resizeMode="stretch"
+            source={require('../../assets/dev/loginBottomCurve.png')}
+            style={{
+              width: Dimensions.get('screen').width,
+              height: Dimensions.get('screen').height * 0.2,
+            }}
+          />
+        </View>
       </View>
-    </View>
     </TouchableWithoutFeedback>
   );
 }

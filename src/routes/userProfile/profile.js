@@ -10,8 +10,9 @@ import {
   ActivityIndicator,
   Dimensions,
   ScrollView,
+  TouchableOpacity,
 } from 'react-native';
-import { Title, Card, FAB, withTheme } from 'react-native-paper';
+import { Title, Card, FAB, withTheme, Portal, Modal } from 'react-native-paper';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import AsyncStorage from '@react-native-community/async-storage';
 
@@ -21,6 +22,7 @@ import MainHeader from '../../components/mainChildHeader';
 
 import axios from '../../../axios';
 import Spinner from '../../components/spinner';
+import { privacy, terms } from '../../components/termsPrivacy';
 
 //import FloatingButton from '../../components/FabIcon';
 const Profile = ({ theme, navigation }) => {
@@ -42,6 +44,14 @@ const Profile = ({ theme, navigation }) => {
       padding: 10,
       zIndex: 5,
     },
+    text: {
+      fontFamily: theme.fonts.regular.fontFamily,
+      fontSize: 20,
+      fontWeight: 'bold',
+      textAlign: 'center',
+      marginVertical: 15,
+      color: theme.colors.grey,
+    },
     mytext: {
       fontSize: 15,
       marginLeft: 10,
@@ -59,10 +69,39 @@ const Profile = ({ theme, navigation }) => {
       alignSelf: 'center',
       bottom: 15,
     },
+    privacyTitle: {
+      fontSize: 20,
+      textAlign: 'center',
+      marginTop: 10,
+      marginBottom: 5,
+      fontWeight: 'bold',
+      fontFamily: theme.fonts.bold.fontFamily,
+      marginBottom: 5,
+    },
+    privacyText: {
+      fontFamily: theme.fonts.regular.fontFamily,
+      fontSize: 12,
+      fontWeight: '200',
+      marginBottom: 5,
+
+      color: theme.colors.grey,
+    },
+    modal: {
+      alignSelf: 'center',
+      backgroundColor: 'rgba(255, 255, 255, 0.8)',
+      width: '80%',
+      paddingBottom: 15,
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.25,
+      shadowRadius: 3.84,
+      elevation: 2,
+    },
   });
   const { state, dispatch } = useContext(GlobalContext);
   const [user, setUser] = useState({});
   const [error, setError] = useState(null);
+  const [termsModal, setTermsModal] = useState(false);
+  const [privacyModal, setPrivacyModal] = useState(false);
   useEffect(() => {
     const fetchUser = async () => {
       dispatch({ type: actionTypes.SET_LOADING, payload: true });
@@ -128,11 +167,119 @@ const Profile = ({ theme, navigation }) => {
     );
   }
 
+  const renderPrivacyModal = (
+    <Portal>
+      <Modal
+        visible={privacyModal}
+        onDismiss={() => setPrivacyModal((m) => !m)}
+        contentContainerStyle={{
+          ...styles.modal,
+          height: '90%',
+          padding: 3,
+        }}
+      >
+        <>
+          <Text style={styles.privacyTitle}> Privacy policy</Text>
+          <View
+            style={{
+              borderBottomColor: theme.colors.grey,
+              borderBottomWidth: 1,
+              marginVertical: 7,
+              alignSelf: 'center',
+              width: '80%',
+            }}
+          />
+          <ScrollView>
+            <Text style={styles.privacyText}>{privacy}</Text>
+          </ScrollView>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignSelf: 'center',
+              marginVertical: 10,
+              alignItems: 'center',
+              justifyContent: 'center',
+              marginBottom: 10,
+            }}
+          >
+            <TouchableOpacity
+              style={{
+                width: '70%',
+                padding: 5,
+                backgroundColor: theme.colors.darkPink,
+                borderRadius: 50,
+              }}
+              onPress={() => setPrivacyModal((m) => !m)}
+            >
+              <Text style={{ textAlign: 'center', padding: 5, color: '#fff' }}>
+                Close
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </>
+      </Modal>
+    </Portal>
+  );
+  const renderTermsModal = (
+    <Portal>
+      <Modal
+        visible={termsModal}
+        onDismiss={() => setTermsModal((m) => !m)}
+        contentContainerStyle={{
+          ...styles.modal,
+          height: '90%',
+          padding: 3,
+        }}
+      >
+        <>
+          <Text style={styles.privacyTitle}> Terms & Conditions</Text>
+          <View
+            style={{
+              borderBottomColor: theme.colors.grey,
+              borderBottomWidth: 1,
+              marginVertical: 7,
+              alignSelf: 'center',
+              width: '80%',
+            }}
+          />
+          <ScrollView>
+            <Text style={styles.privacyText}>{terms}</Text>
+          </ScrollView>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignSelf: 'center',
+              marginVertical: 10,
+              alignItems: 'center',
+              justifyContent: 'center',
+              marginBottom: 10,
+            }}
+          >
+            <TouchableOpacity
+              style={{
+                width: '70%',
+                padding: 5,
+                backgroundColor: theme.colors.darkPink,
+                borderRadius: 50,
+              }}
+              onPress={() => setTermsModal((m) => !m)}
+            >
+              <Text style={{ textAlign: 'center', padding: 5, color: '#fff' }}>
+                Close
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </>
+      </Modal>
+    </Portal>
+  );
   return (
     <>
       <View style={styles.root}>
         <MainHeader navigation={navigation} backRoute="Home" />
         <Spinner visible={state.loading} />
+        {renderTermsModal}
+        {renderPrivacyModal}
         <ScrollView
           contentContainerStyle={{
             flex: 1,
@@ -181,7 +328,20 @@ const Profile = ({ theme, navigation }) => {
               <Text style={styles.mytext}>{user.email}</Text>
             </View>
           </Card>
-
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-around',
+            }}
+          >
+            <Text style={styles.text} onPress={() => setTermsModal(true)}>
+              Terms
+            </Text>
+            <Text style={styles.text} onPress={() => setPrivacyModal(true)}>
+              Privacy
+            </Text>
+          </View>
           {/* <ActionButton
           buttonColor={theme.colors.primary}
           style={{zIndex: 2000, position: 'absolute'}}>
