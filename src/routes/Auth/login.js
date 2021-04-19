@@ -141,7 +141,7 @@ function Login({ theme, navigation }) {
             alignSelf: 'center',
             justifyContent: 'center',
             width: Dimensions.get('screen').width,
-            height: Dimensions.get('screen').height * 0.53,
+            height: Dimensions.get('screen').height * 0.5,
           }}
         >
           <Card.Content>
@@ -215,7 +215,7 @@ function Login({ theme, navigation }) {
             source={require('../../assets/dev/loginBottomCurve.png')}
             style={{
               width: Dimensions.get('screen').width,
-              height: Dimensions.get('screen').height * 0.2,
+              height: Dimensions.get('screen').height * 0.22,
             }}
           />
         </View>

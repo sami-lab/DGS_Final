@@ -81,7 +81,7 @@ async function validateSteps(
         } catch (err) {
           console.log(err.message);
           status = false;
-          message = err.response.data.message;
+          message = err.response ? err.response.data.message : err.message;
         }
       } else {
         status = false;
@@ -473,82 +473,6 @@ function Register({ theme, navigation }) {
       });
   };
 
-  const firstscreen = (
-    <>
-      <ImageBackground
-        source={require('../../assets/dev/dottile.png')}
-        resizeMode="repeat"
-        style={{
-          width: Dimensions.get('screen').width,
-          height: Dimensions.get('screen').height * 0.9,
-          justifyContent: 'flex-end',
-        }}
-      >
-        <Card style={{ ...styles.card, ...styles.card1, marginBottom: 10 }}>
-          <Card.Actions style={{ marginLeft: 5 }}>
-            <MaterialCommunityIcons
-              style={{
-                marginLeft: 3,
-                backgroundColor: '#fff',
-                borderRadius: 50,
-              }}
-              name="arrow-left-circle"
-              size={35}
-              color={theme.colors.primary}
-              onPress={() => navigation.goBack()}
-            />
-          </Card.Actions>
-        </Card>
-        <View style={{ justifyContent: 'center', flex: 1 }}>
-          <Card
-            style={{
-              ...styles.card,
-              borderBottomLeftRadius: 30,
-              borderBottomRightRadius: 30,
-              paddingVertical: 30,
-            }}
-          >
-            <Card.Cover
-              resizeMode="center"
-              source={require('../../assets/dev/logo.png')}
-              style={{
-                borderRadius: 4,
-                elevation: 5,
-                marginBottom: 10,
-                width: Dimensions.get('screen').width * 0.9,
-                height: 185,
-                marginTop: 10,
-                alignSelf: 'center',
-              }}
-            />
-            <Card.Content>
-              <Text style={styles.title}>
-                Register by answering 6 quick questions.
-              </Text>
-            </Card.Content>
-            <Card.Actions style={{ justifyContent: 'center' }}>
-              <Button
-                style={styles.buttonStyles}
-                theme={{ fonts: { regular: 'Apple Color Emoji' } }}
-                onPress={handleNextStep}
-              >
-                <Text
-                  style={{
-                    fontSize: 20,
-                    fontWeight: '700',
-                    color: theme.colors.light,
-                  }}
-                >
-                  {' '}
-                  Continue
-                </Text>
-              </Button>
-            </Card.Actions>
-          </Card>
-        </View>
-      </ImageBackground>
-    </>
-  );
   const firstSection = (
     <>
       <View style={styles.root}>
@@ -576,7 +500,7 @@ function Register({ theme, navigation }) {
             width: Dimensions.get('screen').width,
             height:
               Platform.OS === 'android'
-                ? Dimensions.get('screen').height * 0.53
+                ? Dimensions.get('screen').height * 0.5
                 : Dimensions.get('screen').height * 0.53,
           }}
         >
@@ -646,7 +570,7 @@ function Register({ theme, navigation }) {
             source={require('../../assets/dev/loginBottomCurve.png')}
             style={{
               width: Dimensions.get('screen').width,
-              height: Dimensions.get('screen').height * 0.2,
+              height: Dimensions.get('screen').height * 0.22,
             }}
           />
         </View>
@@ -678,7 +602,7 @@ function Register({ theme, navigation }) {
             alignSelf: 'center',
             justifyContent: 'center',
             width: Dimensions.get('screen').width,
-            height: Dimensions.get('screen').height * 0.53,
+            height: Dimensions.get('screen').height * 0.5,
           }}
         >
           <Card.Content>
@@ -761,7 +685,7 @@ function Register({ theme, navigation }) {
             source={require('../../assets/dev/resetPasswordBottomCurve.png')}
             style={{
               width: Dimensions.get('screen').width,
-              height: Dimensions.get('screen').height * 0.2,
+              height: Dimensions.get('screen').height * 0.22,
             }}
           />
         </View>
@@ -935,7 +859,7 @@ function Register({ theme, navigation }) {
             source={require('../../assets/dev/forgetPasswordBottomCurve.png')}
             style={{
               width: Dimensions.get('screen').width,
-              height: Dimensions.get('screen').height * 0.2,
+              height: Dimensions.get('screen').height * 0.22,
             }}
           />
         </View>
@@ -967,7 +891,7 @@ function Register({ theme, navigation }) {
             alignSelf: 'center',
             justifyContent: 'center',
             width: Dimensions.get('screen').width,
-            height: Dimensions.get('screen').height * 0.53,
+            height: Dimensions.get('screen').height * 0.5,
           }}
         >
           <Card.Content>
@@ -1193,7 +1117,7 @@ function Register({ theme, navigation }) {
             source={require('../../assets/dev/resetPasswordBottomCurve.png')}
             style={{
               width: Dimensions.get('screen').width,
-              height: Dimensions.get('screen').height * 0.2,
+              height: Dimensions.get('screen').height * 0.22,
             }}
           />
         </View>
@@ -1530,7 +1454,6 @@ function Register({ theme, navigation }) {
     <Portal>
       <Modal
         visible={step === 7}
-        onDismiss={() => console.log('dismiss')}
         contentContainerStyle={{
           ...styles.modal,
           height: '90%',
