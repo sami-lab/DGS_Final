@@ -115,7 +115,7 @@ function ResetPassword({ theme, navigation, route }) {
           source={require('../../assets/dev/resetPasswordTopCurve.png')}
           style={{
             width: Dimensions.get('screen').width,
-            height: Dimensions.get('screen').height * 0.2,
+            height: Dimensions.get('screen').height * 0.18,
           }}
         />
       </View>
@@ -125,7 +125,7 @@ function ResetPassword({ theme, navigation, route }) {
         style={{
           alignSelf: 'center',
           width: Dimensions.get('screen').width,
-          height: Dimensions.get('screen').height * 0.52,
+          height: Dimensions.get('screen').height * 0.509,
         }}
       >
         <Image
@@ -201,7 +201,7 @@ function ResetPassword({ theme, navigation, route }) {
           source={require('../../assets/dev/resetPasswordBottomCurve.png')}
           style={{
             width: Dimensions.get('screen').width,
-            height: Dimensions.get('screen').height * 0.21,
+            height: Dimensions.get('screen').height * 0.22,
           }}
         />
       </View>

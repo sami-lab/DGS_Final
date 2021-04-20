@@ -244,7 +244,7 @@ function Register({ theme, navigation }) {
     modal: {
       alignSelf: 'center',
       backgroundColor: 'rgb(255, 255, 255)',
-      width: '80%',
+      width: '90%',
       paddingBottom: 15,
       shadowOffset: { width: 0, height: 2 },
       shadowOpacity: 0.25,
@@ -485,7 +485,7 @@ function Register({ theme, navigation }) {
               width: Dimensions.get('screen').width,
               height:
                 Platform.OS === 'android'
-                  ? Dimensions.get('screen').height * 0.2
+                  ? Dimensions.get('screen').height * 0.18
                   : Dimensions.get('screen').height * 0.28,
             }}
           />
@@ -500,7 +500,7 @@ function Register({ theme, navigation }) {
             width: Dimensions.get('screen').width,
             height:
               Platform.OS === 'android'
-                ? Dimensions.get('screen').height * 0.5
+                ? Dimensions.get('screen').height * 0.509
                 : Dimensions.get('screen').height * 0.53,
           }}
         >
@@ -589,7 +589,7 @@ function Register({ theme, navigation }) {
               width: Dimensions.get('screen').width,
               height:
                 Platform.OS === 'android'
-                  ? Dimensions.get('screen').height * 0.2
+                  ? Dimensions.get('screen').height * 0.18
                   : Dimensions.get('screen').height * 0.28,
             }}
           />
@@ -602,7 +602,7 @@ function Register({ theme, navigation }) {
             alignSelf: 'center',
             justifyContent: 'center',
             width: Dimensions.get('screen').width,
-            height: Dimensions.get('screen').height * 0.5,
+            height: Dimensions.get('screen').height * 0.509,
           }}
         >
           <Card.Content>
@@ -704,7 +704,7 @@ function Register({ theme, navigation }) {
               width: Dimensions.get('screen').width,
               height:
                 Platform.OS === 'android'
-                  ? Dimensions.get('screen').height * 0.2
+                  ? Dimensions.get('screen').height * 0.18
                   : Dimensions.get('screen').height * 0.28,
             }}
           />
@@ -878,7 +878,7 @@ function Register({ theme, navigation }) {
               width: Dimensions.get('screen').width,
               height:
                 Platform.OS === 'android'
-                  ? Dimensions.get('screen').height * 0.2
+                  ? Dimensions.get('screen').height * 0.18
                   : Dimensions.get('screen').height * 0.28,
             }}
           />
@@ -891,7 +891,7 @@ function Register({ theme, navigation }) {
             alignSelf: 'center',
             justifyContent: 'center',
             width: Dimensions.get('screen').width,
-            height: Dimensions.get('screen').height * 0.515,
+            height: Dimensions.get('screen').height * 0.509,
           }}
         >
           <Card.Content>
@@ -1117,7 +1117,7 @@ function Register({ theme, navigation }) {
             source={require('../../assets/dev/resetPasswordBottomCurve.png')}
             style={{
               width: Dimensions.get('screen').width,
-              height: Dimensions.get('screen').height * 0.2,
+              height: Dimensions.get('screen').height * 0.22,
             }}
           />
         </View>
@@ -1136,7 +1136,7 @@ function Register({ theme, navigation }) {
               width: Dimensions.get('screen').width,
               height:
                 Platform.OS === 'android'
-                  ? Dimensions.get('screen').height * 0.25
+                  ? Dimensions.get('screen').height * 0.18
                   : Dimensions.get('screen').height * 0.31,
             }}
           />
@@ -1274,7 +1274,7 @@ function Register({ theme, navigation }) {
             source={require('../../assets/dev/resetPasswordBottomCurve.png')}
             style={{
               width: Dimensions.get('screen').width,
-              height: Dimensions.get('screen').height * 0.2,
+              height: Dimensions.get('screen').height * 0.22,
             }}
           />
         </View>
@@ -1293,7 +1293,7 @@ function Register({ theme, navigation }) {
               width: Dimensions.get('screen').width,
               height:
                 Platform.OS === 'android'
-                  ? Dimensions.get('screen').height * 0.23
+                  ? Dimensions.get('screen').height * 0.18
                   : Dimensions.get('screen').height * 0.31,
             }}
           />
@@ -1442,7 +1442,7 @@ function Register({ theme, navigation }) {
             source={require('../../assets/dev/forgetPasswordBottomCurve.png')}
             style={{
               width: Dimensions.get('screen').width,
-              height: Dimensions.get('screen').height * 0.2,
+              height: Dimensions.get('screen').height * 0.22,
             }}
           />
         </View>
@@ -1520,7 +1520,7 @@ function Register({ theme, navigation }) {
         contentContainerStyle={{
           ...styles.modal,
           height: '90%',
-          padding: 3,
+          padding: 6,
         }}
       >
         <>

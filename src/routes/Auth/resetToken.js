@@ -107,7 +107,7 @@ function ResetToken({ theme, navigation }) {
             width: Dimensions.get('screen').width,
             height:
               Platform.OS === 'android'
-                ? Dimensions.get('screen').height * 0.22
+                ? Dimensions.get('screen').height * 0.18
                 : Dimensions.get('screen').height * 0.2,
           }}
         />
@@ -120,7 +120,7 @@ function ResetToken({ theme, navigation }) {
           width: Dimensions.get('screen').width,
           height:
             Platform.OS === 'android'
-              ? Dimensions.get('screen').height * 0.52
+              ? Dimensions.get('screen').height * 0.509
               : Dimensions.get('screen').height * 0.65,
         }}
       >

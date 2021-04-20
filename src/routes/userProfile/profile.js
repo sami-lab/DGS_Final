@@ -89,7 +89,7 @@ const Profile = ({ theme, navigation }) => {
     modal: {
       alignSelf: 'center',
       backgroundColor: 'rgb(255, 255, 255)',
-      width: '80%',
+      width: '90%',
       paddingBottom: 15,
       shadowOffset: { width: 0, height: 2 },
       shadowOpacity: 0.25,
@@ -175,7 +175,7 @@ const Profile = ({ theme, navigation }) => {
         contentContainerStyle={{
           ...styles.modal,
           height: '90%',
-          padding: 3,
+          padding: 6,
         }}
       >
         <>
@@ -189,7 +189,18 @@ const Profile = ({ theme, navigation }) => {
               width: '80%',
             }}
           />
-          <ScrollView>
+          <ScrollView style={{ paddingHorizontal: 6 }}>
+            <Text
+              style={{
+                ...styles.privacyText,
+                fontWeight: 'bold',
+                fontSize: 15,
+                textAlign: 'center',
+              }}
+            >
+              Please read these Terms of Use (the “Terms”) carefully &
+              thoroughly!
+            </Text>
             <Text style={styles.privacyText}>{privacy}</Text>
           </ScrollView>
           <View
@@ -228,7 +239,7 @@ const Profile = ({ theme, navigation }) => {
         contentContainerStyle={{
           ...styles.modal,
           height: '90%',
-          padding: 3,
+          padding: 6,
         }}
       >
         <>
@@ -242,7 +253,18 @@ const Profile = ({ theme, navigation }) => {
               width: '80%',
             }}
           />
-          <ScrollView>
+          <ScrollView style={{ paddingHorizontal: 6 }}>
+            <Text
+              style={{
+                ...styles.privacyText,
+                fontWeight: 'bold',
+                fontSize: 15,
+                textAlign: 'center',
+              }}
+            >
+              Please read these Terms of Use (the “Terms”) carefully &
+              thoroughly!
+            </Text>
             <Text style={styles.privacyText}>{terms}</Text>
           </ScrollView>
           <View

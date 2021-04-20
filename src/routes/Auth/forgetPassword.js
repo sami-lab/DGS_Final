@@ -114,7 +114,7 @@ function ForgetPassword({ theme, navigation }) {
             width: Dimensions.get('screen').width,
             height:
               Platform.OS === 'android'
-                ? Dimensions.get('screen').height * 0.2
+                ? Dimensions.get('screen').height * 0.18
                 : Dimensions.get('screen').height * 0.23,
           }}
         />
@@ -124,6 +124,7 @@ function ForgetPassword({ theme, navigation }) {
         enabled={enableshift}
         style={{
           alignSelf: 'center',
+
           width: Dimensions.get('screen').width,
           height:
             Platform.OS === 'android'
@@ -137,7 +138,7 @@ function ForgetPassword({ theme, navigation }) {
           style={{
             marginBottom: 10,
             width: '100%',
-            height: 205,
+            height: 170,
           }}
         />
         <Card.Content>
@@ -191,7 +192,7 @@ function ForgetPassword({ theme, navigation }) {
           source={require('../../assets/dev/forgetPasswordBottomCurve.png')}
           style={{
             width: Dimensions.get('screen').width,
-            height: Dimensions.get('screen').height * 0.21,
+            height: Dimensions.get('screen').height * 0.22,
           }}
         />
       </View>

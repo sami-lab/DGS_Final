@@ -129,7 +129,7 @@ function Login({ theme, navigation }) {
               width: Dimensions.get('screen').width,
               height:
                 Platform.OS === 'android'
-                  ? Dimensions.get('screen').height * 0.2
+                  ? Dimensions.get('screen').height * 0.18
                   : Dimensions.get('screen').height * 0.28,
             }}
           />
@@ -141,7 +141,7 @@ function Login({ theme, navigation }) {
             alignSelf: 'center',
             justifyContent: 'center',
             width: Dimensions.get('screen').width,
-            height: Dimensions.get('screen').height * 0.5,
+            height: Dimensions.get('screen').height * 0.509,
           }}
         >
           <Card.Content>
