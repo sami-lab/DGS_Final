@@ -1,4 +1,4 @@
-import React, {useState, useContext} from 'react';
+import React, { useState, useContext } from 'react';
 import {
   StyleSheet,
   View,
@@ -9,15 +9,15 @@ import {
   TextInput,
   Text,
   Alert,
-  Platform
+  Platform,
 } from 'react-native';
-import {Card, Button, Title, withTheme} from 'react-native-paper';
-import {GlobalContext} from '../../context/GlobalContext';
+import { Card, Button, Title, withTheme } from 'react-native-paper';
+import { GlobalContext } from '../../context/GlobalContext';
 import * as actionTypes from '../../context/actions';
 import axios from '../../../axios';
 import Spinner from '../../components/spinner';
 
-function ForgetPassword({theme, navigation}) {
+function ForgetPassword({ theme, navigation }) {
   const styles = StyleSheet.create({
     root: {
       flex: 1,
@@ -28,7 +28,7 @@ function ForgetPassword({theme, navigation}) {
       width: Dimensions.get('screen').width * 0.8,
       shadowColor: '#000',
       alignSelf: 'center',
-      shadowOffset: {width: 0, height: 2},
+      shadowOffset: { width: 0, height: 2 },
       shadowOpacity: 0.25,
       shadowRadius: 3.84,
       elevation: 5, //for Andriod,
@@ -69,29 +69,29 @@ function ForgetPassword({theme, navigation}) {
       marginVertical: 5,
     },
   });
-  const {state, dispatch} = useContext(GlobalContext);
+  const { state, dispatch } = useContext(GlobalContext);
 
   const [email, setEmail] = React.useState('');
   const [enableshift, setenableShift] = useState(false);
 
   const submitData = () => {
-    dispatch({type: actionTypes.SET_LOADING, payload: true});
+    dispatch({ type: actionTypes.SET_LOADING, payload: true });
     // //apply validation here first
     axios
       .post('/users/forgetpassword', {
         email,
       })
       .then((res) => {
-        dispatch({type: actionTypes.SET_LOADING, payload: false});
+        dispatch({ type: actionTypes.SET_LOADING, payload: false });
         Alert.alert(`Password Send to Email successfuly`);
         //redirect to password sucuss view
         navigation.navigate('ResetToken');
       })
       .catch((error) => {
-        dispatch({type: actionTypes.SET_LOADING, payload: false});
+        dispatch({ type: actionTypes.SET_LOADING, payload: false });
         Alert.alert(
           'Fail',
-          error.response ? error.response.data.message : error.message,
+          error.response ? error.response.data.message : error.message
         );
       });
   };
@@ -99,7 +99,7 @@ function ForgetPassword({theme, navigation}) {
     return (
       email != null &&
       /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/gim.test(
-        email,
+        email
       )
     );
   };
@@ -112,7 +112,10 @@ function ForgetPassword({theme, navigation}) {
           source={require('../../assets/dev/forgetPasswordTopCurve.png')}
           style={{
             width: Dimensions.get('screen').width,
-            height: Platform.OS === 'android' ? Dimensions.get('screen').height * 0.15 :Dimensions.get('screen').height * 0.2,
+            height:
+              Platform.OS === 'android'
+                ? Dimensions.get('screen').height * 0.2
+                : Dimensions.get('screen').height * 0.23,
           }}
         />
       </View>
@@ -122,8 +125,12 @@ function ForgetPassword({theme, navigation}) {
         style={{
           alignSelf: 'center',
           width: Dimensions.get('screen').width,
-          height: Platform.OS === 'android' ? Dimensions.get('screen').height * 0.6 :Dimensions.get('screen').height * 0.65,
-        }}>
+          height:
+            Platform.OS === 'android'
+              ? Dimensions.get('screen').height * 0.51
+              : Dimensions.get('screen').height * 0.6,
+        }}
+      >
         <Image
           resizeMode="center"
           source={require('../../assets/dev/lock.png')}
@@ -150,19 +157,22 @@ function ForgetPassword({theme, navigation}) {
             flexDirection: 'row',
             alignItems: 'center',
             justifyContent: 'space-around',
-          }}>
+          }}
+        >
           <Button
             color="#fff"
             disabled={state.loading}
             style={styles.buttonStyles}
-            onPress={() => navigation.goBack()}>
+            onPress={() => navigation.goBack()}
+          >
             <Text style={styles.buttonText}> Previous</Text>{' '}
           </Button>
           <Button
             color="#fff"
             disabled={state.loading || !validateinput()}
             style={styles.buttonStyles}
-            onPress={submitData}>
+            onPress={submitData}
+          >
             <Text style={styles.buttonText}> Next</Text>{' '}
           </Button>
         </View>
@@ -174,13 +184,14 @@ function ForgetPassword({theme, navigation}) {
           justifyContent: 'flex-end',
           padding: 0,
           margin: 0,
-        }}>
+        }}
+      >
         <Image
           resizeMode="stretch"
           source={require('../../assets/dev/forgetPasswordBottomCurve.png')}
           style={{
             width: Dimensions.get('screen').width,
-            height: Dimensions.get('screen').height * 0.15,
+            height: Dimensions.get('screen').height * 0.21,
           }}
         />
       </View>

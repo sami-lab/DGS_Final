@@ -32,7 +32,7 @@ export default function mainChildHeader({ navigation, backRoute }) {
       source={require('../assets/dev/mainCurve.png')}
       style={{
         width: Dimensions.get('screen').width,
-        height: Dimensions.get('screen').height * 0.17,
+        height: Dimensions.get('screen').height * 0.16,
         justifyContent: 'space-between',
         alignItems: 'center',
         flexDirection: 'row',

@@ -243,7 +243,7 @@ function Register({ theme, navigation }) {
     },
     modal: {
       alignSelf: 'center',
-      backgroundColor: 'rgba(255, 255, 255, 0.8)',
+      backgroundColor: 'rgb(255, 255, 255)',
       width: '80%',
       paddingBottom: 15,
       shadowOffset: { width: 0, height: 2 },
@@ -891,7 +891,7 @@ function Register({ theme, navigation }) {
             alignSelf: 'center',
             justifyContent: 'center',
             width: Dimensions.get('screen').width,
-            height: Dimensions.get('screen').height * 0.5,
+            height: Dimensions.get('screen').height * 0.515,
           }}
         >
           <Card.Content>
@@ -1117,7 +1117,7 @@ function Register({ theme, navigation }) {
             source={require('../../assets/dev/resetPasswordBottomCurve.png')}
             style={{
               width: Dimensions.get('screen').width,
-              height: Dimensions.get('screen').height * 0.22,
+              height: Dimensions.get('screen').height * 0.2,
             }}
           />
         </View>
@@ -1274,7 +1274,7 @@ function Register({ theme, navigation }) {
             source={require('../../assets/dev/resetPasswordBottomCurve.png')}
             style={{
               width: Dimensions.get('screen').width,
-              height: Dimensions.get('screen').height * 0.25,
+              height: Dimensions.get('screen').height * 0.2,
             }}
           />
         </View>
@@ -1293,7 +1293,7 @@ function Register({ theme, navigation }) {
               width: Dimensions.get('screen').width,
               height:
                 Platform.OS === 'android'
-                  ? Dimensions.get('screen').height * 0.25
+                  ? Dimensions.get('screen').height * 0.23
                   : Dimensions.get('screen').height * 0.31,
             }}
           />
@@ -1442,7 +1442,7 @@ function Register({ theme, navigation }) {
             source={require('../../assets/dev/forgetPasswordBottomCurve.png')}
             style={{
               width: Dimensions.get('screen').width,
-              height: Dimensions.get('screen').height * 0.25,
+              height: Dimensions.get('screen').height * 0.2,
             }}
           />
         </View>
@@ -1472,6 +1472,16 @@ function Register({ theme, navigation }) {
             }}
           />
           <ScrollView>
+            <Text
+              style={{
+                ...styles.privacyText,
+                fontWeight: 'bold',
+                fontSize: 15,
+              }}
+            >
+              Please read these Terms of Use (the “Terms”) carefully &
+              thoroughly!
+            </Text>
             <Text style={styles.privacyText}>{privacy}</Text>
           </ScrollView>
           <View
@@ -1525,6 +1535,16 @@ function Register({ theme, navigation }) {
             }}
           />
           <ScrollView>
+            <Text
+              style={{
+                ...styles.privacyText,
+                fontWeight: 'bold',
+                fontSize: 15,
+              }}
+            >
+              Please read these Terms of Use (the “Terms”) carefully &
+              thoroughly!
+            </Text>
             <Text style={styles.privacyText}>{terms}</Text>
           </ScrollView>
           <View

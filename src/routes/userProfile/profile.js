@@ -88,7 +88,7 @@ const Profile = ({ theme, navigation }) => {
     },
     modal: {
       alignSelf: 'center',
-      backgroundColor: 'rgba(255, 255, 255, 0.8)',
+      backgroundColor: 'rgb(255, 255, 255)',
       width: '80%',
       paddingBottom: 15,
       shadowOffset: { width: 0, height: 2 },
