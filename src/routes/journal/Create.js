@@ -6,6 +6,8 @@ import {
   Text,
   KeyboardAvoidingView,
   TextInput,
+  Keyboard,
+  TouchableWithoutFeedback ,
   Alert,
   TouchableOpacity,
 } from 'react-native';
@@ -41,6 +43,7 @@ function Create({ theme, navigation, route }) {
     inputStyle: {
       paddingHorizontal: 20,
       borderRadius: 40,
+      height:45
     },
     buttonStyles: {
       display: 'flex',
@@ -179,6 +182,8 @@ function Create({ theme, navigation, route }) {
       });
   };
   return (
+    <TouchableWithoutFeedback 
+      onPress={() => Keyboard.dismiss()}>
     <View style={styles.root}>
       <KeyboardAvoidingView behavior="position" enabled={enableshift}>
         <Spinner visible={state.loading} />
@@ -189,6 +194,7 @@ function Create({ theme, navigation, route }) {
         <Card elevation={1} style={styles.inputCard}>
           <TextInput
             placeholder="Title"
+            placeholderTextColor="#C7C7CD"
             style={styles.inputStyle}
             value={title}
             onSubmitEditing={() => descriptionRef.current.focus()}
@@ -305,6 +311,7 @@ function Create({ theme, navigation, route }) {
         </TouchableOpacity>
       </View>
     </View>
+    </TouchableWithoutFeedback>
   );
 }
 

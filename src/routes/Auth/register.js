@@ -982,6 +982,7 @@ function Register({ theme, navigation }) {
               defaultIndex={countryName}
               //default selected item index
               placeholder="Select Country"
+              placeholderTextColor="#C7C7CD"
               //place holder for the search input
               //reset textInput Value with true and false state
               underlineColorAndroid="transparent"
@@ -1037,6 +1038,7 @@ function Register({ theme, navigation }) {
               defaultIndex={city}
               //default selected item index
               placeholder="Select State"
+              placeholderTextColor="#C7C7CD"
               //place holder for the search input
               resetValue={false}
               //reset textInput Value with true and false state
@@ -1395,7 +1397,7 @@ function Register({ theme, navigation }) {
 
   return (
     <TouchableWithoutFeedback 
-onPress={() => Keyboard.dismiss()}>
+      onPress={() => Keyboard.dismiss()}>
       <View style={styles.root}>
         {step === 1 ? firstSection : null}
         {step === 2 ? secondSection : null}
