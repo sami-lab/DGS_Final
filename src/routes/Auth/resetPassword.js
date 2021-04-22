@@ -1,4 +1,4 @@
-import React, {useState, useContext, useRef} from 'react';
+import React, { useState, useContext, useRef } from 'react';
 import {
   StyleSheet,
   View,
@@ -11,14 +11,14 @@ import {
   Text,
 } from 'react-native';
 
-import {Card, Button, Title, withTheme} from 'react-native-paper';
+import { Card, Button, Title, withTheme } from 'react-native-paper';
 
 import axios from '../../../axios';
-import {GlobalContext} from '../../context/GlobalContext';
+import { GlobalContext } from '../../context/GlobalContext';
 import * as actionTypes from '../../context/actions';
 import Spinner from '../../components/spinner';
 
-function ResetPassword({theme, navigation, route}) {
+function ResetPassword({ theme, navigation, route }) {
   const styles = StyleSheet.create({
     root: {
       flex: 1,
@@ -29,7 +29,7 @@ function ResetPassword({theme, navigation, route}) {
       width: Dimensions.get('screen').width * 0.8,
       shadowColor: '#000',
       alignSelf: 'center',
-      shadowOffset: {width: 0, height: 2},
+      shadowOffset: { width: 0, height: 2 },
       shadowOpacity: 0.25,
       shadowRadius: 3.84,
       elevation: 10, //for Andriod,
@@ -68,7 +68,7 @@ function ResetPassword({theme, navigation, route}) {
       marginVertical: 5,
     },
   });
-  const {state, dispatch} = useContext(GlobalContext);
+  const { state, dispatch } = useContext(GlobalContext);
 
   const [code, setCode] = React.useState(route.params.token);
   const [password, setPassword] = useState('');
@@ -77,7 +77,7 @@ function ResetPassword({theme, navigation, route}) {
   const [enableshift, setenableShift] = useState(false);
 
   const submitData = () => {
-    dispatch({type: actionTypes.SET_LOADING, payload: true});
+    dispatch({ type: actionTypes.SET_LOADING, payload: true });
     // //apply validation here first
     axios
       .patch('/users/resetPassword/' + code, {
@@ -85,16 +85,16 @@ function ResetPassword({theme, navigation, route}) {
         confirmPassword,
       })
       .then((response) => {
-        dispatch({type: actionTypes.SET_LOADING, payload: false});
+        dispatch({ type: actionTypes.SET_LOADING, payload: false });
         Alert.alert(response.data.message);
         navigation.navigate('Login');
       })
       .catch((error) => {
         console.log(error);
-        dispatch({type: actionTypes.SET_LOADING, payload: false});
+        dispatch({ type: actionTypes.SET_LOADING, payload: false });
         Alert.alert(
           'Fail',
-          error.response ? error.response.data.message : error.message,
+          error.response ? error.response.data.message : error.message
         );
       });
   };
@@ -115,7 +115,7 @@ function ResetPassword({theme, navigation, route}) {
           source={require('../../assets/dev/resetPasswordTopCurve.png')}
           style={{
             width: Dimensions.get('screen').width,
-            height: Dimensions.get('screen').height * 0.15,
+            height: Dimensions.get('screen').height * 0.18,
           }}
         />
       </View>
@@ -125,8 +125,9 @@ function ResetPassword({theme, navigation, route}) {
         style={{
           alignSelf: 'center',
           width: Dimensions.get('screen').width,
-          height: Dimensions.get('screen').height * 0.61,
-        }}>
+          height: Dimensions.get('screen').height * 0.509,
+        }}
+      >
         <Image
           resizeMode="center"
           source={require('../../assets/dev/unlock.png')}
@@ -166,19 +167,22 @@ function ResetPassword({theme, navigation, route}) {
             flexDirection: 'row',
             alignItems: 'center',
             justifyContent: 'space-around',
-          }}>
+          }}
+        >
           <Button
             color="#fff"
             disabled={state.loading}
             style={styles.buttonStyles}
-            onPress={() => navigation.goBack()}>
+            onPress={() => navigation.goBack()}
+          >
             <Text style={styles.buttonText}> Previous</Text>{' '}
           </Button>
           <Button
             color="#fff"
             disabled={state.loading || !validateinput()}
             style={styles.buttonStyles}
-            onPress={submitData}>
+            onPress={submitData}
+          >
             <Text style={styles.buttonText}> Reset</Text>{' '}
           </Button>
         </View>
@@ -190,13 +194,14 @@ function ResetPassword({theme, navigation, route}) {
           justifyContent: 'flex-end',
           padding: 0,
           margin: 0,
-        }}>
+        }}
+      >
         <Image
           resizeMode="stretch"
           source={require('../../assets/dev/resetPasswordBottomCurve.png')}
           style={{
             width: Dimensions.get('screen').width,
-            height: Dimensions.get('screen').height * 0.15,
+            height: Dimensions.get('screen').height * 0.22,
           }}
         />
       </View>

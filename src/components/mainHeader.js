@@ -36,7 +36,7 @@ export default function MainHeader() {
       source={require('../assets/dev/mainCurve.png')}
       style={{
         width: Dimensions.get('screen').width,
-        height: Dimensions.get('screen').height * 0.15,
+        height: Dimensions.get('screen').height * 0.2,
         justifyContent: 'center',
       }}
     >

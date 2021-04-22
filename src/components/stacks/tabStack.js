@@ -23,7 +23,7 @@ import Video from '../../assets/dev/videoTab.svg';
 import ImageGallary from '../../assets/dev/imageGallaryTab.svg';
 
 const Tab = createBottomTabNavigator();
-
+const deviceHeight = Dimensions.get('window').height
 function TabScreen(props) {
   const { theme } = props;
 
@@ -75,7 +75,7 @@ function TabScreen(props) {
 
         keyboardHidesTabBar: true,
         style: {
-          height: 64,
+          height: deviceHeight/10,
           backgroundColor: 'transparent',
           borderTopColor: 'transparent',
           elevation: 0,

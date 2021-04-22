@@ -8,13 +8,21 @@ import {
   TextInput,
   Text,
   Keyboard,
-  TouchableWithoutFeedback ,
+  TouchableWithoutFeedback,
   ImageBackground,
   Dimensions,
-  SafeAreaView,
-  Platform
+  TouchableOpacity,
+  Platform,
+  ScrollView,
 } from 'react-native';
-import { Card, Button, withTheme } from 'react-native-paper';
+import {
+  Card,
+  Button,
+  withTheme,
+  Modal,
+  Portal,
+  Title,
+} from 'react-native-paper';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { GlobalContext } from '../../context/GlobalContext';
@@ -28,8 +36,7 @@ import Spinner from '../../components/spinner';
 
 import countriesData from '../../assets/dev/countries.json';
 import states from '../../assets/dev/states.json';
-
-
+import { terms, privacy } from '../../components/termsPrivacy';
 //This is to validate that we can move to next step
 //this will return false if validation fail
 async function validateSteps(
@@ -43,7 +50,7 @@ async function validateSteps(
   country,
   city,
   gender,
-  age,
+  age
 ) {
   console.log(
     'from validations',
@@ -57,7 +64,7 @@ async function validateSteps(
     country,
     city,
     gender,
-    age,
+    age
   );
   let status = false;
   let message = '';
@@ -74,7 +81,7 @@ async function validateSteps(
         } catch (err) {
           console.log(err.message);
           status = false;
-          message = err.response.data.message;
+          message = err.response ? err.response.data.message : err.message;
         }
       } else {
         status = false;
@@ -102,7 +109,7 @@ async function validateSteps(
       if (
         email &&
         /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/gim.test(
-          email,
+          email
         ) &&
         status === true
       ) {
@@ -163,6 +170,12 @@ async function validateSteps(
         status = false;
         message = 'Please Select your Age';
       }
+      break;
+    case 7:
+      status = true;
+      break;
+    case 8:
+      status = true;
       break;
     default:
       status = false;
@@ -226,8 +239,35 @@ function Register({ theme, navigation }) {
       backgroundColor: theme.colors.darkPink,
       borderRadius: Dimensions.get('screen').height * 0.04,
       justifyContent: 'center',
-      alignItems: 'center'
-    }
+      alignItems: 'center',
+    },
+    modal: {
+      alignSelf: 'center',
+      backgroundColor: 'rgb(255, 255, 255)',
+      width: '90%',
+      paddingBottom: 15,
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.25,
+      shadowRadius: 3.84,
+      elevation: 2,
+    },
+    privacyTitle: {
+      fontSize: 20,
+      textAlign: 'center',
+      marginTop: 10,
+      marginBottom: 5,
+      fontWeight: 'bold',
+      fontFamily: theme.fonts.bold.fontFamily,
+      marginBottom: 5,
+    },
+    privacyText: {
+      fontFamily: theme.fonts.regular.fontFamily,
+      fontSize: 12,
+      fontWeight: '200',
+      marginBottom: 5,
+      textAlign: 'center',
+      color: theme.colors.grey,
+    },
   });
   const { state, dispatch } = useContext(GlobalContext);
   const [name, setName] = useState('');
@@ -275,7 +315,7 @@ function Register({ theme, navigation }) {
           null,
           email,
           password,
-          confirmPassword,
+          confirmPassword
         );
         status = res.status;
         err = res.message;
@@ -288,7 +328,7 @@ function Register({ theme, navigation }) {
           null,
           null,
           null,
-          divorseStatus,
+          divorseStatus
         );
         status = res.status;
         err = res.message;
@@ -303,7 +343,7 @@ function Register({ theme, navigation }) {
           null,
           null,
           countryName,
-          city,
+          city
         );
         status = res.status;
         err = res.message;
@@ -319,7 +359,7 @@ function Register({ theme, navigation }) {
           null,
           null,
           null,
-          gender,
+          gender
         );
         status = res.status;
         err = res.message;
@@ -336,7 +376,41 @@ function Register({ theme, navigation }) {
           null,
           null,
           null,
-          age,
+          age
+        );
+        status = res.status;
+        err = res.message;
+        break;
+      case 7:
+        res = await validateSteps(
+          step,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        );
+        status = res.status;
+        err = res.message;
+        break;
+      case 8:
+        res = await validateSteps(
+          step,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
         );
         status = res.status;
         err = res.message;
@@ -345,7 +419,7 @@ function Register({ theme, navigation }) {
         break;
     }
     if (status) {
-      if (step === 6) {
+      if (step === 8) {
         await submitData();
       } else {
         dispatch({ type: actionTypes.SET_LOADING, payload: false });
@@ -383,6 +457,7 @@ function Register({ theme, navigation }) {
       })
       .then((response) => {
         dispatch({ type: actionTypes.SET_LOADING, payload: false });
+        setStep(1);
         navigation.navigate('RegisterationSuccess', {
           user: response.data.data.user,
           token: response.data.token,
@@ -393,83 +468,11 @@ function Register({ theme, navigation }) {
         dispatch({ type: actionTypes.SET_LOADING, payload: false });
         Alert.alert(
           'Fail',
-          error.response ? error.response.data.message : error.message,
+          error.response ? error.response.data.message : error.message
         );
       });
   };
 
-  const firstscreen = (
-    <>
-      <ImageBackground
-        source={require('../../assets/dev/dottile.png')}
-        resizeMode="repeat"
-        style={{
-          width: Dimensions.get('screen').width,
-          height: Dimensions.get('screen').height * 0.9,
-          justifyContent: 'flex-end',
-        }}>
-        <Card style={{ ...styles.card, ...styles.card1, marginBottom: 10 }}>
-          <Card.Actions style={{ marginLeft: 5 }}>
-            <MaterialCommunityIcons
-              style={{
-                marginLeft: 3,
-                backgroundColor: '#fff',
-                borderRadius: 50,
-              }}
-              name="arrow-left-circle"
-              size={35}
-              color={theme.colors.primary}
-              onPress={() => navigation.goBack()}
-            />
-          </Card.Actions>
-        </Card>
-        <View style={{ justifyContent: 'center', flex: 1 }}>
-          <Card
-            style={{
-              ...styles.card,
-              borderBottomLeftRadius: 30,
-              borderBottomRightRadius: 30,
-              paddingVertical: 30,
-            }}>
-            <Card.Cover
-              resizeMode="center"
-              source={require('../../assets/dev/logo.png')}
-              style={{
-                borderRadius: 4,
-                elevation: 5,
-                marginBottom: 10,
-                width: Dimensions.get('screen').width * 0.9,
-                height: 185,
-                marginTop: 10,
-                alignSelf: 'center',
-              }}
-            />
-            <Card.Content>
-              <Text style={styles.title}>
-                Register by answering 6 quick questions.
-              </Text>
-            </Card.Content>
-            <Card.Actions style={{ justifyContent: 'center' }}>
-              <Button
-                style={styles.buttonStyles}
-                theme={{ fonts: { regular: 'Apple Color Emoji' } }}
-                onPress={handleNextStep}>
-                <Text
-                  style={{
-                    fontSize: 20,
-                    fontWeight: '700',
-                    color: theme.colors.light,
-                  }}>
-                  {' '}
-                  Continue
-                </Text>
-              </Button>
-            </Card.Actions>
-          </Card>
-        </View>
-      </ImageBackground>
-    </>
-  );
   const firstSection = (
     <>
       <View style={styles.root}>
@@ -480,7 +483,10 @@ function Register({ theme, navigation }) {
             source={require('../../assets/dev/forgetPasswordTopCurve.png')}
             style={{
               width: Dimensions.get('screen').width,
-              height: Platform.OS === 'android' ? Dimensions.get('screen').height * 0.2 : Dimensions.get('screen').height * 0.28,
+              height:
+                Platform.OS === 'android'
+                  ? Dimensions.get('screen').height * 0.18
+                  : Dimensions.get('screen').height * 0.28,
             }}
           />
         </View>
@@ -492,8 +498,12 @@ function Register({ theme, navigation }) {
             alignSelf: 'center',
             justifyContent: 'center',
             width: Dimensions.get('screen').width,
-            height: Platform.OS === 'android' ? Dimensions.get('screen').height * 0.53 : Dimensions.get('screen').height * 0.53,
-          }}>
+            height:
+              Platform.OS === 'android'
+                ? Dimensions.get('screen').height * 0.509
+                : Dimensions.get('screen').height * 0.53,
+          }}
+        >
           <Card.Content>
             <Text style={styles.title}>Choose a username.</Text>
           </Card.Content>
@@ -526,19 +536,22 @@ function Register({ theme, navigation }) {
               flexDirection: 'row',
               alignItems: 'center',
               justifyContent: 'space-around',
-            }}>
+            }}
+          >
             <Button
               color="#fff"
               disabled={state.loading}
               style={styles.buttonStyles}
-              onPress={() => navigation.goBack()}>
+              onPress={() => navigation.goBack()}
+            >
               <Text style={styles.buttonText}> Previous</Text>{' '}
             </Button>
             <Button
               color="#fff"
               disabled={state.loading}
               style={styles.buttonStyles}
-              onPress={handleNextStep}>
+              onPress={handleNextStep}
+            >
               <Text style={styles.buttonText}> Continue</Text>{' '}
             </Button>
           </View>
@@ -550,17 +563,17 @@ function Register({ theme, navigation }) {
             justifyContent: 'flex-end',
             padding: 0,
             margin: 0,
-          }}>
+          }}
+        >
           <Image
             resizeMode="stretch"
             source={require('../../assets/dev/loginBottomCurve.png')}
             style={{
               width: Dimensions.get('screen').width,
-              height: Dimensions.get('screen').height * 0.2,
+              height: Dimensions.get('screen').height * 0.22,
             }}
           />
         </View>
-
       </View>
     </>
   );
@@ -574,7 +587,10 @@ function Register({ theme, navigation }) {
             source={require('../../assets/dev/loginTopCurve.png')}
             style={{
               width: Dimensions.get('screen').width,
-              height: Platform.OS === 'android' ? Dimensions.get('screen').height * 0.2 : Dimensions.get('screen').height * 0.28,
+              height:
+                Platform.OS === 'android'
+                  ? Dimensions.get('screen').height * 0.18
+                  : Dimensions.get('screen').height * 0.28,
             }}
           />
         </View>
@@ -586,8 +602,9 @@ function Register({ theme, navigation }) {
             alignSelf: 'center',
             justifyContent: 'center',
             width: Dimensions.get('screen').width,
-            height: Dimensions.get('screen').height * 0.53,
-          }}>
+            height: Dimensions.get('screen').height * 0.509,
+          }}
+        >
           <Card.Content>
             <Text style={styles.title}> Enter your Email and Password </Text>
           </Card.Content>
@@ -634,19 +651,22 @@ function Register({ theme, navigation }) {
               flexDirection: 'row',
               alignItems: 'center',
               justifyContent: 'space-around',
-            }}>
+            }}
+          >
             <Button
               color="#fff"
               disabled={state.loading}
               style={styles.buttonStyles}
-              onPress={handleBackStep}>
+              onPress={handleBackStep}
+            >
               <Text style={styles.buttonText}> Previous</Text>{' '}
             </Button>
             <Button
               color="#fff"
               disabled={state.loading}
               style={styles.buttonStyles}
-              onPress={handleNextStep}>
+              onPress={handleNextStep}
+            >
               <Text style={styles.buttonText}> Continue</Text>{' '}
             </Button>
           </View>
@@ -658,13 +678,14 @@ function Register({ theme, navigation }) {
             justifyContent: 'flex-end',
             padding: 0,
             margin: 0,
-          }}>
+          }}
+        >
           <Image
             resizeMode="stretch"
             source={require('../../assets/dev/resetPasswordBottomCurve.png')}
             style={{
               width: Dimensions.get('screen').width,
-              height: Dimensions.get('screen').height * 0.2,
+              height: Dimensions.get('screen').height * 0.22,
             }}
           />
         </View>
@@ -681,7 +702,10 @@ function Register({ theme, navigation }) {
             source={require('../../assets/dev/forgetPasswordTopCurve.png')}
             style={{
               width: Dimensions.get('screen').width,
-              height: Platform.OS === 'android' ? Dimensions.get('screen').height * 0.2 : Dimensions.get('screen').height * 0.28,
+              height:
+                Platform.OS === 'android'
+                  ? Dimensions.get('screen').height * 0.18
+                  : Dimensions.get('screen').height * 0.28,
             }}
           />
         </View>
@@ -693,12 +717,14 @@ function Register({ theme, navigation }) {
             justifyContent: 'center',
             flex: 1,
             width: Dimensions.get('screen').width * 0.9,
-          }}>
+          }}
+        >
           <View
             style={{
               height: Dimensions.get('screen').height * 0.5,
               justifyContent: 'center',
-            }}>
+            }}
+          >
             <Card.Content>
               <Text style={styles.title}> Which one are you?</Text>
             </Card.Content>
@@ -706,7 +732,8 @@ function Register({ theme, navigation }) {
               style={{
                 height: Dimensions.get('screen').height * 0.35,
                 justifyContent: 'space-between',
-              }}>
+              }}
+            >
               <DropDownPicker
                 customArrowUp={() => (
                   <View style={styles.dropdownIconContainer}>
@@ -714,7 +741,6 @@ function Register({ theme, navigation }) {
                       name="keyboard-arrow-up"
                       size={36}
                       color={theme.colors.light}
-
                     />
                   </View>
                 )}
@@ -724,7 +750,6 @@ function Register({ theme, navigation }) {
                       name="keyboard-arrow-down"
                       size={36}
                       color={theme.colors.light}
-
                     />
                   </View>
                 )}
@@ -733,17 +758,17 @@ function Register({ theme, navigation }) {
                   {
                     label: 'Thinking of separating',
                     value: 'Thinking of separating',
-                    icon: () => { },
+                    icon: () => {},
                   },
                   {
                     label: 'I’m going through a divorce',
                     value: 'I’m going through a divorce',
-                    icon: () => { },
+                    icon: () => {},
                   },
                   {
                     label: 'I’m already divorced',
                     value: 'I’m already divorced',
-                    icon: () => { },
+                    icon: () => {},
                   },
                 ]}
                 placeholder="Choose one"
@@ -774,7 +799,8 @@ function Register({ theme, navigation }) {
                       width: '80%',
                       alignSelf: 'center',
                       borderBottomColor: theme.colors.grey,
-                    }}></View>
+                    }}
+                  ></View>
                 )}
                 itemStyle={{
                   justifyContent: 'flex-start',
@@ -797,19 +823,22 @@ function Register({ theme, navigation }) {
                   flexDirection: 'row',
                   alignItems: 'center',
                   justifyContent: 'space-around',
-                }}>
+                }}
+              >
                 <Button
                   color="#fff"
                   disabled={state.loading}
                   style={styles.buttonStyles}
-                  onPress={handleBackStep}>
+                  onPress={handleBackStep}
+                >
                   <Text style={styles.buttonText}> Previous</Text>{' '}
                 </Button>
                 <Button
                   color="#fff"
                   disabled={state.loading}
                   style={styles.buttonStyles}
-                  onPress={handleNextStep}>
+                  onPress={handleNextStep}
+                >
                   <Text style={styles.buttonText}> Continue</Text>{' '}
                 </Button>
               </View>
@@ -823,13 +852,14 @@ function Register({ theme, navigation }) {
             justifyContent: 'flex-end',
             padding: 0,
             margin: 0,
-          }}>
+          }}
+        >
           <Image
             resizeMode="stretch"
             source={require('../../assets/dev/forgetPasswordBottomCurve.png')}
             style={{
               width: Dimensions.get('screen').width,
-              height: Dimensions.get('screen').height * 0.2,
+              height: Dimensions.get('screen').height * 0.22,
             }}
           />
         </View>
@@ -846,7 +876,10 @@ function Register({ theme, navigation }) {
             source={require('../../assets/dev/loginTopCurve.png')}
             style={{
               width: Dimensions.get('screen').width,
-              height: Platform.OS === 'android' ? Dimensions.get('screen').height * 0.2 : Dimensions.get('screen').height * 0.28,
+              height:
+                Platform.OS === 'android'
+                  ? Dimensions.get('screen').height * 0.18
+                  : Dimensions.get('screen').height * 0.28,
             }}
           />
         </View>
@@ -858,8 +891,9 @@ function Register({ theme, navigation }) {
             alignSelf: 'center',
             justifyContent: 'center',
             width: Dimensions.get('screen').width,
-            height: Dimensions.get('screen').height * 0.53,
-          }}>
+            height: Dimensions.get('screen').height * 0.509,
+          }}
+        >
           <Card.Content>
             <Text style={styles.title}> Select Your Location</Text>
           </Card.Content>
@@ -986,7 +1020,7 @@ function Register({ theme, navigation }) {
               //place holder for the search input
               //reset textInput Value with true and false state
               underlineColorAndroid="transparent"
-            //To remove the underline from the android input
+              //To remove the underline from the android input
             />
           </Card>
           <Card style={styles.inputCard}>
@@ -1025,13 +1059,13 @@ function Register({ theme, navigation }) {
               items={
                 availalbleStates
                   ? availalbleStates.length > 0 &&
-                  availalbleStates.map((item, i) => {
-                    const obj = {
-                      id: item.id,
-                      name: item.name,
-                    };
-                    return obj;
-                  })
+                    availalbleStates.map((item, i) => {
+                      const obj = {
+                        id: item.id,
+                        name: item.name,
+                      };
+                      return obj;
+                    })
                   : []
               }
               //mapping of item array
@@ -1043,7 +1077,7 @@ function Register({ theme, navigation }) {
               resetValue={false}
               //reset textInput Value with true and false state
               underlineColorAndroid="transparent"
-            //To remove the underline from the android input
+              //To remove the underline from the android input
             />
           </Card>
 
@@ -1052,19 +1086,22 @@ function Register({ theme, navigation }) {
               flexDirection: 'row',
               alignItems: 'center',
               justifyContent: 'space-around',
-            }}>
+            }}
+          >
             <Button
               color="#fff"
               disabled={state.loading}
               style={styles.buttonStyles}
-              onPress={handleBackStep}>
+              onPress={handleBackStep}
+            >
               <Text style={styles.buttonText}> Previous</Text>{' '}
             </Button>
             <Button
               color="#fff"
               disabled={state.loading}
               style={styles.buttonStyles}
-              onPress={handleNextStep}>
+              onPress={handleNextStep}
+            >
               <Text style={styles.buttonText}> Continue</Text>{' '}
             </Button>
           </View>
@@ -1075,13 +1112,14 @@ function Register({ theme, navigation }) {
             justifyContent: 'flex-end',
             padding: 0,
             margin: 0,
-          }}>
+          }}
+        >
           <Image
             resizeMode="stretch"
             source={require('../../assets/dev/resetPasswordBottomCurve.png')}
             style={{
               width: Dimensions.get('screen').width,
-              height: Dimensions.get('screen').height * 0.2,
+              height: Dimensions.get('screen').height * 0.22,
             }}
           />
         </View>
@@ -1098,7 +1136,10 @@ function Register({ theme, navigation }) {
             source={require('../../assets/dev/forgetPasswordTopCurve.png')}
             style={{
               width: Dimensions.get('screen').width,
-              height: Platform.OS === 'android' ? Dimensions.get('screen').height * 0.25 : Dimensions.get('screen').height * 0.31,
+              height:
+                Platform.OS === 'android'
+                  ? Dimensions.get('screen').height * 0.18
+                  : Dimensions.get('screen').height * 0.31,
             }}
           />
         </View>
@@ -1111,7 +1152,8 @@ function Register({ theme, navigation }) {
             justifyContent: 'center',
             flex: 1,
             width: Dimensions.get('screen').width,
-          }}>
+          }}
+        >
           <Card.Content>
             <Text style={styles.title}> Select Your Gender</Text>
           </Card.Content>
@@ -1120,7 +1162,8 @@ function Register({ theme, navigation }) {
             style={{
               height: Dimensions.get('screen').height * 0.4,
               justifyContent: 'space-around',
-            }}>
+            }}
+          >
             <DropDownPicker
               customArrowUp={() => (
                 <View style={styles.dropdownIconContainer}>
@@ -1128,7 +1171,6 @@ function Register({ theme, navigation }) {
                     name="keyboard-arrow-up"
                     size={36}
                     color={theme.colors.light}
-
                   />
                 </View>
               )}
@@ -1138,13 +1180,12 @@ function Register({ theme, navigation }) {
                     name="keyboard-arrow-down"
                     size={36}
                     color={theme.colors.light}
-
                   />
                 </View>
               )}
               items={[
-                { label: 'Male', value: 'Male', icon: () => { } },
-                { label: 'Female', value: 'Female', icon: () => { } },
+                { label: 'Male', value: 'Male', icon: () => {} },
+                { label: 'Female', value: 'Female', icon: () => {} },
               ]}
               placeholder="Choose one"
               placeholder="Choose one"
@@ -1175,7 +1216,8 @@ function Register({ theme, navigation }) {
                     width: '80%',
                     alignSelf: 'center',
                     borderBottomColor: theme.colors.grey,
-                  }}></View>
+                  }}
+                ></View>
               )}
               itemStyle={{
                 justifyContent: 'flex-start',
@@ -1199,19 +1241,22 @@ function Register({ theme, navigation }) {
                 flexDirection: 'row',
                 alignItems: 'center',
                 justifyContent: 'space-around',
-              }}>
+              }}
+            >
               <Button
                 color="#fff"
                 disabled={state.loading}
                 style={styles.buttonStyles}
-                onPress={handleBackStep}>
+                onPress={handleBackStep}
+              >
                 <Text style={styles.buttonText}> Previous</Text>{' '}
               </Button>
               <Button
                 color="#fff"
                 disabled={state.loading}
                 style={styles.buttonStyles}
-                onPress={handleNextStep}>
+                onPress={handleNextStep}
+              >
                 <Text style={styles.buttonText}> Continue</Text>{' '}
               </Button>
             </View>
@@ -1224,13 +1269,14 @@ function Register({ theme, navigation }) {
             justifyContent: 'flex-end',
             padding: 0,
             margin: 0,
-          }}>
+          }}
+        >
           <Image
             resizeMode="stretch"
             source={require('../../assets/dev/resetPasswordBottomCurve.png')}
             style={{
               width: Dimensions.get('screen').width,
-              height: Dimensions.get('screen').height * 0.25,
+              height: Dimensions.get('screen').height * 0.22,
             }}
           />
         </View>
@@ -1247,7 +1293,10 @@ function Register({ theme, navigation }) {
             source={require('../../assets/dev/resetPasswordTopCurve.png')}
             style={{
               width: Dimensions.get('screen').width,
-              height: Platform.OS === 'android' ? Dimensions.get('screen').height * 0.25 : Dimensions.get('screen').height * 0.31,
+              height:
+                Platform.OS === 'android'
+                  ? Dimensions.get('screen').height * 0.18
+                  : Dimensions.get('screen').height * 0.31,
             }}
           />
         </View>
@@ -1260,48 +1309,51 @@ function Register({ theme, navigation }) {
             justifyContent: 'center',
             flex: 1,
             width: Dimensions.get('screen').width * 0.9,
-          }}>
+          }}
+        >
           <View
             style={{
               height: Dimensions.get('screen').height * 0.5,
               justifyContent: 'center',
-            }}>
+            }}
+          >
             <Text style={styles.title}> How old are you? </Text>
 
             <View
               style={{
                 height: Dimensions.get('screen').height * 0.35,
                 justifyContent: 'space-between',
-              }}>
+              }}
+            >
               <DropDownPicker
                 customArrowUp={() => (
                   <View style={styles.dropdownIconContainer}>
-
                     <MaterialIcons
                       name="keyboard-arrow-up"
                       size={36}
                       color={theme.colors.light}
-
                     />
                   </View>
                 )}
                 customArrowDown={() => (
                   <View style={styles.dropdownIconContainer}>
-
                     <MaterialIcons
                       name="keyboard-arrow-down"
                       size={36}
                       color={theme.colors.light}
-
                     />
                   </View>
                 )}
                 items={[
-                  { label: '30 or under', value: '30 or under', icon: () => { } },
-                  { label: '31-40', value: '31-40', icon: () => { } },
-                  { label: '41-50', value: '41-50', icon: () => { } },
-                  { label: '51-60', value: '51-60', icon: () => { } },
-                  { label: 'over 60', value: 'over 60', icon: () => { } },
+                  {
+                    label: '30 or under',
+                    value: '30 or under',
+                    icon: () => {},
+                  },
+                  { label: '31-40', value: '31-40', icon: () => {} },
+                  { label: '41-50', value: '41-50', icon: () => {} },
+                  { label: '51-60', value: '51-60', icon: () => {} },
+                  { label: 'over 60', value: 'over 60', icon: () => {} },
                 ]}
                 style={{
                   ...styles.inputStyle,
@@ -1326,7 +1378,8 @@ function Register({ theme, navigation }) {
                       width: '80%',
                       alignSelf: 'center',
                       borderBottomColor: theme.colors.grey,
-                    }}></View>
+                    }}
+                  ></View>
                 )}
                 itemStyle={{
                   justifyContent: 'flex-start',
@@ -1355,19 +1408,22 @@ function Register({ theme, navigation }) {
                   flexDirection: 'row',
                   alignItems: 'center',
                   justifyContent: 'space-around',
-                }}>
+                }}
+              >
                 <Button
                   color="#fff"
                   disabled={state.loading}
                   style={styles.buttonStyles}
-                  onPress={handleBackStep}>
+                  onPress={handleBackStep}
+                >
                   <Text style={styles.buttonText}> Previous</Text>{' '}
                 </Button>
                 <Button
                   color="#fff"
                   disabled={state.loading}
                   style={styles.buttonStyles}
-                  onPress={handleNextStep}>
+                  onPress={handleNextStep}
+                >
                   <Text style={styles.buttonText}> Submit</Text>{' '}
                 </Button>
               </View>
@@ -1381,13 +1437,14 @@ function Register({ theme, navigation }) {
             justifyContent: 'flex-end',
             padding: 0,
             margin: 0,
-          }}>
+          }}
+        >
           <Image
             resizeMode="stretch"
             source={require('../../assets/dev/forgetPasswordBottomCurve.png')}
             style={{
               width: Dimensions.get('screen').width,
-              height: Dimensions.get('screen').height * 0.25,
+              height: Dimensions.get('screen').height * 0.22,
             }}
           />
         </View>
@@ -1395,9 +1452,134 @@ function Register({ theme, navigation }) {
     </>
   );
 
+  const sevenSection = (
+    <Portal>
+      <Modal
+        visible={step === 7}
+        contentContainerStyle={{
+          ...styles.modal,
+          height: '90%',
+          padding: 3,
+        }}
+      >
+        <>
+          <Text style={styles.privacyTitle}> Privacy policy</Text>
+          <View
+            style={{
+              borderBottomColor: theme.colors.grey,
+              borderBottomWidth: 1,
+              marginVertical: 7,
+              alignSelf: 'center',
+              width: '80%',
+            }}
+          />
+          <ScrollView>
+            <Text
+              style={{
+                ...styles.privacyText,
+                fontWeight: 'bold',
+                fontSize: 15,
+              }}
+            >
+              Please read these Terms of Use (the “Terms”) carefully &
+              thoroughly!
+            </Text>
+            <Text style={styles.privacyText}>{privacy}</Text>
+          </ScrollView>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignSelf: 'center',
+              marginVertical: 10,
+              alignItems: 'center',
+              justifyContent: 'center',
+              marginBottom: 10,
+            }}
+          >
+            <TouchableOpacity
+              style={{
+                width: '70%',
+                padding: 5,
+                backgroundColor: theme.colors.darkPink,
+                borderRadius: 50,
+              }}
+              onPress={handleNextStep}
+            >
+              <Text style={{ textAlign: 'center', padding: 5, color: '#fff' }}>
+                Accept
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </>
+      </Modal>
+    </Portal>
+  );
+  const eigthSection = (
+    <Portal>
+      <Modal
+        visible={step === 8}
+        onDismiss={() => console.log('dismiss')}
+        contentContainerStyle={{
+          ...styles.modal,
+          height: '90%',
+          padding: 6,
+        }}
+      >
+        <>
+          <Text style={styles.privacyTitle}> Terms & Conditions</Text>
+          <View
+            style={{
+              borderBottomColor: theme.colors.grey,
+              borderBottomWidth: 1,
+              marginVertical: 7,
+              alignSelf: 'center',
+              width: '80%',
+            }}
+          />
+          <ScrollView>
+            <Text
+              style={{
+                ...styles.privacyText,
+                fontWeight: 'bold',
+                fontSize: 15,
+              }}
+            >
+              Please read these Terms of Use (the “Terms”) carefully &
+              thoroughly!
+            </Text>
+            <Text style={styles.privacyText}>{terms}</Text>
+          </ScrollView>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignSelf: 'center',
+              marginVertical: 10,
+              alignItems: 'center',
+              justifyContent: 'center',
+              marginBottom: 10,
+            }}
+          >
+            <TouchableOpacity
+              style={{
+                width: '70%',
+                padding: 5,
+                backgroundColor: theme.colors.darkPink,
+                borderRadius: 50,
+              }}
+              onPress={handleNextStep}
+            >
+              <Text style={{ textAlign: 'center', padding: 5, color: '#fff' }}>
+                Accept
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </>
+      </Modal>
+    </Portal>
+  );
   return (
-    <TouchableWithoutFeedback 
-      onPress={() => Keyboard.dismiss()}>
+
+    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={styles.root}>
         {step === 1 ? firstSection : null}
         {step === 2 ? secondSection : null}
@@ -1405,6 +1587,8 @@ function Register({ theme, navigation }) {
         {step == 4 ? fourthSection : null}
         {step == 5 ? fifthSection : null}
         {step == 6 ? sixSection : null}
+        {step == 7 ? sevenSection : null}
+        {step == 8 ? eigthSection : null}
       </View>
     </TouchableWithoutFeedback>
   );

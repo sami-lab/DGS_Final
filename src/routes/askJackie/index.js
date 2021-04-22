@@ -47,7 +47,7 @@ function AskJackie({ theme, navigation }) {
 
       <View style={{ justifyContent: 'center', flex: 1 }}>
         <Image
-          source={require('../../assets/dev/askJackie.png')}
+          source={require('../../assets/dev/askMe.jpg')}
           style={{
             marginBottom: 10,
             width: 250,
